@@ -1,0 +1,62 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <h2 class="text-center mb-4">Register your application</h2>
+
+      <form (submit)="onSubmit(registerForm)" #registerForm="ngForm">
+        <div class="form-group">
+          <label for="appname">App name *</label>
+          <input type="text" class="form-control"
+          name="appname" placeholder="Enter your App name" [(ngModel)]="appName" required>
+          <p class="warning">{{nameErrorSaisie}}</p>
+          <p class="error" *ngIf="verification && registerForm.submitted && registerForm.controls['appname'].hasError('required')">Application name is required *</p>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password *</label>
+          <div class="input-group">
+            <input
+              type="{{ passwordFieldType }}"
+              class="form-control"
+              name="password"
+              placeholder="Enter your password"
+              [(ngModel)]="password"
+              required
+            />
+            <div class="input-group-append">
+              <button
+                [ngClass]="passwordFieldType === 'password' ? 'btn btn-outline-secondary' : 'btn btn-secondary'"
+                type="button"
+                (click)="togglePasswordVisibility()"
+              >
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+          </div>
+          <p class="warning">{{ nameErrorSaisie }}</p>
+          <p
+            class="error"
+            *ngIf="
+              verification &&
+              registerForm.submitted &&
+              registerForm.controls['password'].hasError('required')
+            "
+          >
+            Password is required *
+          </p>
+        </div>
+
+
+        <button type="submit" class="btn btn-dark mt-2" >Register</button>
+
+        <span class="user-missing" *ngIf="errorUseNameMdp">{{stringUseNameMdp}}</span>
+        <span class="registration-message text-success" *ngIf="registedSucced === 'Inscription réussie'">{{registedSucced}}</span>
+        <span class="pas-encore" *ngIf="reponseError">{{registedSucced}}</span>
+
+        <button routerLink="/login" class="btn btn-dark mt-2 go-back-login" (click)="goToLogin()" *ngIf="registedSucced === 'Inscription réussie'">Go To Login</button>
+
+
+      </form>
+    </div>
+  </div>
+</div>

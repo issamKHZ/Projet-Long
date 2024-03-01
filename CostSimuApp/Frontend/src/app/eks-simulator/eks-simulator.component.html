@@ -1,0 +1,9 @@
+<app-header></app-header>
+<div class="d-flex" style="margin: 0; height: 90vh; background-color: #c7cac6;">
+  <app-side-bar [clique]="section"></app-side-bar>
+  <div class="container" style="height: 100%; overflow: auto;">
+    <app-eks-formulaire *ngIf="section === 'calcul'"></app-eks-formulaire>
+    <app-eks-result *ngIf="section === 'result'"></app-eks-result>
+  </div>
+
+</div>

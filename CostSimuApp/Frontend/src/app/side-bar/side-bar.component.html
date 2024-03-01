@@ -9,29 +9,29 @@
   <hr>
   <ul class="nav nav-pills flex-column mb-auto">
     <li class="nav-item">
-      <a href="#" [class]="'nav-link text-white ' + (clique === 'home' ? 'active' : '')" aria-current="page" (click)="cliquer('home')">
+      <a routerLink="" [class]="'nav-link text-white ' + (clique === 'home' ? 'active' : '')" aria-current="page" (click)="cliquer('home')">
         <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
         Home
       </a>
     </li>
     <li>
-      <a href="#" [class]="'nav-link text-white ' + (clique === 'dashboard' ? 'active' : '')" (click)="cliquer('dashboard')">
+      <a [class]="'nav-link text-white ' + (clique === 'calcul' ? 'active' : '')" aria-current="page" (click)="cliquer('calcul')">
         <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-        Dashboard
+        {{currentRoute == '/' ? 'Estimate deployment': 'Calcul'}}
       </a>
     </li>
-    <li>
-      <a href="#" [class]="'nav-link text-white ' + (clique === 'orders' ? 'active' : '')" (click)="cliquer('orders')">
+    <li *ngIf="currentRoute != '/'">
+      <a [class]="'nav-link text-white ' + (clique === 'result' ? 'active' : '')" (click)="cliquer('result')">
         <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-        Orders
+        Result
       </a>
     </li>
-    <li>
+    <!--<li>
       <a href="#" [class]="'nav-link text-white ' + (clique === 'apps' ? 'active' : '')" (click)="cliquer('apps')">
         <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
         APPs
       </a>
-    </li>
+    </li>-->
   </ul>
   <hr>
   <div class="dropdown">

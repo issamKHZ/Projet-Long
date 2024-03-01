@@ -1,0 +1,13 @@
+package com.costSimu.Api;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class CostSimuApiApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(CostSimuApiApplication.class, args);
+	}
+
+}

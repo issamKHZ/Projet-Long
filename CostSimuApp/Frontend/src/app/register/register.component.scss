@@ -1,0 +1,53 @@
+.error {
+  color: red;
+}
+
+.warning {
+  color: #ff8c00;
+}
+
+.errorBorder {
+  border: 1px solid red;
+}
+
+.registration-message {
+  display: block;
+  text-align: center;
+  margin-top: 10px; /* Ajustez cette valeur selon vos besoins */
+  background-color: #d4edda; /* Couleur de fond verte */
+  border: 1px solid #c3e6cb; /* Bordure verte */
+  color: #155724; /* Couleur du texte */
+  padding: 10px; /* Ajoute un espace à l'intérieur du span */
+  border-radius: 5px; /* Coins arrondis */
+}
+
+.user-missing {
+  display: block;
+  text-align: center;
+  margin-top: 10px; /* Ajustez cette valeur selon vos besoins */
+  background-color: #f8f8d7; /* Couleur de fond verte */
+  border: 1px solid #e4ff9b; /* Bordure verte */
+  color: #ff8c00; /* Couleur du texte */
+  padding: 10px; /* Ajoute un espace à l'intérieur du span */
+  border-radius: 5px; /* Coins arrondis */
+}
+
+.pas-encore {
+  display: block;
+  text-align: center;
+  margin-top: 10px; /* Ajustez cette valeur selon vos besoins */
+  background-color:transparent;
+  border: transparent;
+  color: #ff8c00;
+  padding: 10px; /* Ajoute un espace à l'intérieur du span */
+  border-radius: 5px; /* Coins arrondis */
+}
+
+.go-back-login {
+  display: block;
+  text-align: center;
+}
+.lien {
+  color: #007bff;
+  text-decoration: underline;
+}

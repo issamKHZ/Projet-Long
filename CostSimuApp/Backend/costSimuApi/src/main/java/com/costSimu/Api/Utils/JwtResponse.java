@@ -1,0 +1,42 @@
+package com.costSimu.Api.Utils;
+
+public class JwtResponse {
+	
+	private String token;
+	private String type = "Bearer";
+	private String appname;
+	
+	
+	public JwtResponse(String token, String appname) {
+		super();
+		this.token = token;		
+		this.appname = appname;		
+	}
+	
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getAppname() {
+		return appname;
+	}
+
+	public void setAppname(String appname) {
+		this.appname = appname;
+	}
+
+	
+	
+}
