@@ -36,20 +36,19 @@ public class CalculController {
 	@PostMapping(path="/calcul")
 	public @ResponseBody ResponseEntity<Double> calculerPrice (HttpServletRequest request) {			
 		JsonNode propsNode;
+		Double price = 0.0;
 		try {
-			propsNode = objectMapper.readTree(request.getParameter("props"));
-			System.out.println("props is : " + propsNode);
+			propsNode = objectMapper.readTree(request.getParameter("props"));			
 			HashMap<String, Object> propsMap = this.JsonToMap(propsNode);
-			System.out.println("porpsMap is : " + propsMap);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
+			String appname = request.getParameter("appName");
+			System.out.println("controller propsMap : " + propsMap);
+			System.out.println("controller appname : " + appname);
+			price = calculeService.calculateServicePrice(appname, propsMap);
+		} catch (JsonProcessingException e) {			
 			e.printStackTrace();
 		}
-		String token = jwtUtils.extractJwtTokenFromHeader(request.getHeader("Authorization"));
-		//String appname = jwtUtils.getUsernameFromJWT(token);						
-			    	   	    
-		//Double price = calculeService.calculateServicePrice(appname, props);
-		return new ResponseEntity<Double>(0.0, HttpStatus.OK);
+		String token = jwtUtils.extractJwtTokenFromHeader(request.getHeader("Authorization"));										    	   	  		
+		return new ResponseEntity<Double>(price, HttpStatus.OK);
 	}
 	
 	public HashMap<String, Object> JsonToMap(JsonNode propsNode) {
@@ -58,22 +57,19 @@ public class CalculController {
         // Parcourir chaque élément de la liste
         for (JsonNode propNode : propsNode) {
             String field = propNode.get("field").asText();
-            JsonNode valueNode = propNode.get("value");
+            String valueNode = propNode.get("value").asText();
 
+            
             // Convertir la valeur en fonction de son type
-            Object value;
-            if (valueNode.isInt()) {
-                value = valueNode.asInt();
-            } else if (valueNode.isTextual()) {
-                value = valueNode.asText();
-            } else {
-                // Gérer d'autres types au besoin
-                value = null;
+            try {
+            	int nombre = Integer.parseInt(valueNode);
+            	propsMap.put(field, nombre);
+            } catch (NumberFormatException e) {
+            	propsMap.put(field, valueNode);
             }
-
-            // Mettre la paire clé/valeur dans le HashMap
-            propsMap.put(field, value);
+            
         }
+        System.out.println("props receivied are : " + propsMap);
         return propsMap;
 	}
 	

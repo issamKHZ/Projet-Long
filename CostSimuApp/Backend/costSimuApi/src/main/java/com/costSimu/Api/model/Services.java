@@ -18,25 +18,25 @@ public class Services {
 	}
 
 	public HashMap<String, HashMap<String, Double>> getMultipleProprieties() {
-		return MultipleProprieties;
+		return multipleProprieties;
 	}
 
 	public void setMultipleProprieties(HashMap<String, HashMap<String, Double>> multipleProprieties) {
-		MultipleProprieties = multipleProprieties;
+		multipleProprieties = multipleProprieties;
 	}
 	@Id
 	private String id;
 	
 	private String name;
 	private HashMap<String, Double> directProprieties;
-	private HashMap<String, HashMap<String, Double>> MultipleProprieties;
+	private HashMap<String, HashMap<String, Double>> multipleProprieties;
 	
 	public Services(String name, HashMap<String, Double> directProprieties,
 			HashMap<String, HashMap<String, Double>> multipleProprieties) {
 		super();
 		this.name = name;
 		this.directProprieties = directProprieties;
-		MultipleProprieties = multipleProprieties;
+		this.multipleProprieties = multipleProprieties;
 	}
 
 	public String getId() {

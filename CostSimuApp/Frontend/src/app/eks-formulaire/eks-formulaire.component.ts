@@ -24,7 +24,7 @@ export class EksFormulaireComponent implements OnInit{
       {
         name: "Eks Cluster Pricing",
         desc: "Per month",
-        price : 75.00,
+        price : 0.00,
         prop : [{field: "number of eks cluster", type: 'text', value: ""}],
         bool: false
       },
@@ -84,6 +84,11 @@ export class EksFormulaireComponent implements OnInit{
     }
   }
 
+  changePriceOfService(serviceName: string, price: any) {
+    let serv = this.services.filter((s) => {return s.name === serviceName})[0];
+    serv.price = Number(price);
+  }
+
   onSubmit(form: NgForm, service: any) {
 
     var prop : any[] = [];
@@ -96,16 +101,19 @@ export class EksFormulaireComponent implements OnInit{
     });
 
     this.calculService.calculer(service.name, JSON.stringify(prop)).subscribe((response) => {
-      console.log(response);
+      service.price = response;
+      if (!this.calculatedSevices.includes(service)) {
+        this.calculatedSevices.push(service);
+      } else {
+        for (let s of this.calculatedSevices) {
+          if (s.name == service.name) {
+            s.price = response;
+          }
+        }
+      }
     }
 
     );
-
-    console.log("prop envoyé is : ", prop);
-
-    if (!this.calculatedSevices.includes(service)) {
-      this.calculatedSevices.push(service)
-    }
 
     this.changeBoolOfService(service, false);
   }
