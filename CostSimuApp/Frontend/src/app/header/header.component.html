@@ -12,38 +12,28 @@
 
     <div class="collapse navbar-collapse" id="navbarsExample04">
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">item</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">item</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">item</a>
-        </li>
-        <li class="nav-item" *ngIf="showIt">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
-        <li class="nav-item dropdown" *ngIf="showIt">
-          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
+
       </ul>
       <form role="search">
         <input class="form-control" type="search" placeholder="Search" aria-label="Search">
       </form>
-      <div>
-        <button class="btn btn-outline-light ms-2" routerLink="/login">Login</button>
+      <div *ngIf="!isLoggedIn()" style="display: flex;">
+        <div>
+          <button class="btn btn-outline-light ms-2" routerLink="/login">Login</button>
+        </div>
+
+        <div>
+          <button class="btn btn-warning ms-2" routerLink="/register">Sign up</button>
+        </div>
       </div>
 
-      <div>
-        <button class="btn btn-warning ms-2" routerLink="/register">Sign up</button>
+      <div class="dropdown text-end" style="padding-left: 20px;" *ngIf="isLoggedIn()">
+        <button class="btn btn-light link-body-emphasis dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> {{appName}} </button>
+        <ul class="dropdown-menu text-small" style="width: auto;">
+          <li><a class="dropdown-item" (click)="LogOut()">Sign out</a></li>
+        </ul>
       </div>
-
     </div>
   </div>
 </nav>
+

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.costSimu.Api.repository.UserRepository;
 import com.costSimu.Api.model.Role;
+import com.costSimu.Api.model.enumerate.RoleEnum;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{
@@ -28,7 +29,14 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String appname) throws UsernameNotFoundException {
         com.costSimu.Api.model.User user = userRepository.findByAppname(appname).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
-        return new User(user.getAppname(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+        Role role = new Role();
+        role.setName(RoleEnum.USER);
+        return new User(
+        	    user.getAppname(),
+        	    user.getPassword(),
+        	    mapRolesToAuthorities(new HashSet<>(Collections.singleton(role)))
+        	);
+
     }
 
     private Collection<GrantedAuthority> mapRolesToAuthorities(Set<Role> set) {

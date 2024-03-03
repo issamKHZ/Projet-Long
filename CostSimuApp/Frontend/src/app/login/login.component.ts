@@ -48,7 +48,7 @@ export class LoginComponent {
       },
       (error) => {
         this.errorUseNameMdp = true;
-        this.stringUseNameMdp = 'something is wrong in connexion';
+        this.stringUseNameMdp = 'Incorrect Application name or Password';
       }
       );
     }

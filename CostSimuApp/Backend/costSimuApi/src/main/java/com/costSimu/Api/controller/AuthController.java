@@ -37,8 +37,7 @@ public class AuthController {
 	public @ResponseBody ResponseEntity<JwtResponse> login(@RequestParam String appName, 
 									  @RequestParam String mdp) {
 		ResponseEntity<JwtResponse> output;		
-		output = this.authService.login(appName, mdp);
-		System.out.println("quit login controller : " + output);
+		output = this.authService.login(appName, mdp);		
 		return output;
 	}
 }

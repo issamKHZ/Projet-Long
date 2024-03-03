@@ -46,7 +46,8 @@ export class AuthService {
           // Stocker le token dans le localStorage
           //localStorage.setItem('access_token', response.accessToken);
            // Enregistrez le token dans le cookie
-          this.cookieService.set('access_token', response.token, undefined, undefined, undefined, true, 'Strict');
+          this.cookieService.set('token', response.token, undefined, undefined, undefined, true, 'Strict');
+          this.cookieService.set('appName', response.appname, undefined, undefined, undefined, true, 'Strict');
           return response;
         }),
         catchError((error: HttpErrorResponse) => {
@@ -59,11 +60,11 @@ export class AuthService {
       //const token = localStorage.getItem('access_token');
       // Check if the token is expired. If it is, the user is not logged in.
       //return !this.jwtHelper.isTokenExpired(token);
-      return this.cookieService.check('access_token');
+      return this.cookieService.check('token');
     }
 
     LogOut() {
-      this.cookieService.delete("acces_token");
+      this.cookieService.deleteAll();
     }
 
 }

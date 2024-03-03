@@ -1,7 +1,7 @@
 <div class="container">
   <main>
     <div class="row g-5">
-      <div class="col-md-5 col-lg-4 order-md-last">
+      <div class="col-md-5 col-lg-4 order-md-last" style="padding-top: 20px;">
         <h4 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-primary">Services</span>
           <span class="badge bg-primary rounded-pill">{{calculatedSevices.length}}</span>
@@ -12,7 +12,10 @@
               <h6 class="my-0">{{service.name}}</h6>
               <small class="text-body-secondary">{{service.desc}}</small>
             </div>
-            <span class="text-body-secondary">{{service.price}}</span>
+            <span class="text-body-secondary">{{ service.price | currency:'USD':'symbol':'2.2-2' }}</span>
+            <span (click)="removeService(service)" style="cursor: pointer; padding-left: 10px;">
+              <i class="bi bi-trash"></i>
+            </span>
           </li>
 
           <li class="list-group-item d-flex justify-content-between">
@@ -20,175 +23,55 @@
             <strong>price</strong>
           </li>
         </ul>
-
-        <!--<form class="card p-2">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Promo code">
-            <button type="submit" class="btn btn-secondary">Redeem</button>
-          </div>
-        </form>-->
       </div>
-      <div class="col-md-7 col-lg-8">
+
+
+      <div class="col-md-7 col-lg-8" style="padding: 20px;">
         <h4 class="mb-3">EKS Deployment Calculator</h4>
-        <form class="needs-validation" (submit)="onSubmit(depForm)" #depForm="ngForm" novalidate>
-          <div class="row g-3">
-            <!--<div class="col-sm-6">
-              <label for="firstName" class="form-label">First name</label>
-              <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
-              <div class="invalid-feedback">
-                Valid first name is required.
-              </div>
-            </div>
 
-            <div class="col-sm-6">
-              <label for="lastName" class="form-label">Last name</label>
-              <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
-              <div class="invalid-feedback">
-                Valid last name is required.
-              </div>
-            </div>-->
+        <div class="section" *ngFor="let service of services">
+          <div>
+            <h1 class="desc-title" (click)="toggleSection(service)" style="box-shadow: 0px 2px 12px 0px #000000; overflow: hidden;">
+              <button class="round-button">
+                <i class="bi {{ShowModule(service.name) ? 'bi-caret-down-fill' : 'bi-caret-right-fill'}}"></i>
+              </button>
+              {{service.name}}
+            </h1>
+          </div>
+          <div class="service-info" *ngIf="ShowModule(service.name)" style="margin-bottom: 30px;">
+            <form class="needs-validation" (submit)="onSubmit(depForm, service)" #depForm="ngForm" novalidate>
+              <div class="form-group" *ngFor="let prop of service.prop; let i = index" style="padding-top: 10px;">
+                <label for="{{prop.field}}" class="form-label" style="padding-left: 10px;"><strong>{{prop.field}}</strong></label>
 
-            <div class="col-12">
-              <label for="username" class="form-label">Some info(not decided yet)</label>
-              <div class="input-group has-validation">
-                <!--<span class="input-group-text">n</span>-->
-                <input type="text" class="form-control" id="username" placeholder="Username" required>
-              <div class="invalid-feedback">
-                  Your username is required.
+                <div *ngIf="prop.type === 'text'" class="input-group has-validation">
+                  <input type="text" class="form-control" id="{{prop.field}}" name="{{prop.field}}" [(ngModel)]="prop.value">
                 </div>
-              </div>
-            </div>
 
-            <div class="col-12">
-              <label for="username" class="form-label">Some info(not decided yet)</label>
-              <div class="input-group has-validation">
-                <!--<span class="input-group-text">n</span>-->
-                <input type="text" class="form-control" id="username" placeholder="Username" required>
-              <div class="invalid-feedback">
-                  Your username is required.
+                <div *ngIf="prop.type === 'dropdown'" class="input-group has-validation">
+                  <select class="form-select" id="{{prop.field}}" name="{{prop.field}}" [(ngModel)]="prop.value">
+                    <option value="" disabled selected>Select</option>
+                    <option *ngFor="let choice of prop.choices" [value]="choice">{{choice}}</option>
+                  </select>
                 </div>
-              </div>
-            </div><div class="col-12">
-              <label for="username" class="form-label">Some info(not decided yet)</label>
-              <div class="input-group has-validation">
-                <!--<span class="input-group-text">n</span>-->
-                <input type="text" class="form-control" id="username" placeholder="Username" required>
-              <div class="invalid-feedback">
-                  Your username is required.
+
+                <div *ngIf="prop.type === 'radio'" class="input-group has-validation" style="display: flex; flex-direction: column;">
+                  <div *ngFor="let choice of prop.choices" style="display: flex; gap: 5px;">
+                    <input type="radio" id="{{choice}}" name="{{prop.field}}" value="{{choice}}" [(ngModel)]="prop.value">
+                    <label for="{{choice}}">{{choice}}</label>
+                  </div>
                 </div>
-              </div>
-            </div><div class="col-12">
-              <label for="username" class="form-label">Some info(not decided yet)</label>
-              <div class="input-group has-validation">
-                <!--<span class="input-group-text">n</span>-->
-                <input type="text" class="form-control" id="username" placeholder="Username" required>
-              <div class="invalid-feedback">
-                  Your username is required.
-                </div>
-              </div>
             </div>
-
-            <!--<div class="col-md-5">
-              <label for="country" class="form-label">Country</label>
-              <select class="form-select" id="country" required>
-                <option value="">Choose...</option>
-                <option>United States</option>
-              </select>
-              <div class="invalid-feedback">
-                Please select a valid country.
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <label for="state" class="form-label">State</label>
-              <select class="form-select" id="state" required>
-                <option value="">Choose...</option>
-                <option>California</option>
-              </select>
-              <div class="invalid-feedback">
-                Please provide a valid state.
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <label for="zip" class="form-label">Zip</label>
-              <input type="text" class="form-control" id="zip" placeholder="" required>
-              <div class="invalid-feedback">
-                Zip code required.
-              </div>
-            </div>
+              <hr class="my-4">
+              <button class="w-100 btn btn-primary btn-lg" type="submit">Add To Calcul</button>
+            </form>
           </div>
+        </div>
 
-          <hr class="my-4">
 
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="same-address">
-            <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
-          </div>
 
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="save-info">
-            <label class="form-check-label" for="save-info">Save this information for next time</label>
-          </div>
 
-          <hr class="my-4">
 
-          <h4 class="mb-3">Payment</h4>
 
-          <div class="my-3">
-            <div class="form-check">
-              <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
-              <label class="form-check-label" for="credit">Credit card</label>
-            </div>
-            <div class="form-check">
-              <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
-              <label class="form-check-label" for="debit">Debit card</label>
-            </div>
-            <div class="form-check">
-              <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
-              <label class="form-check-label" for="paypal">PayPal</label>
-            </div>
-          </div>
-
-          <div class="row gy-3">
-            <div class="col-md-6">
-              <label for="cc-name" class="form-label">Name on card</label>
-              <input type="text" class="form-control" id="cc-name" placeholder="" required>
-              <small class="text-body-secondary">Full name as displayed on card</small>
-              <div class="invalid-feedback">
-                Name on card is required
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <label for="cc-number" class="form-label">Credit card number</label>
-              <input type="text" class="form-control" id="cc-number" placeholder="" required>
-              <div class="invalid-feedback">
-                Credit card number is required
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <label for="cc-expiration" class="form-label">Expiration</label>
-              <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-              <div class="invalid-feedback">
-                Expiration date required
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <label for="cc-cvv" class="form-label">CVV</label>
-              <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-              <div class="invalid-feedback">
-                Security code required
-              </div>
-            </div>-->
-          </div>
-
-          <hr class="my-4">
-
-          <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
-        </form>
       </div>
     </div>
   </main>

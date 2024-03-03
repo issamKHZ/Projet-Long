@@ -1,5 +1,8 @@
+import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from './../services/auth.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-header',
@@ -11,8 +14,13 @@ export class HeaderComponent {
   showIt: boolean = false;
   showSideBar : string = "false";
   @Output() newItemEvent = new EventEmitter<string>();
+  appName !: string;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+              private authService: AuthService,
+              private cookieService: CookieService) {
+                this.appName = this.cookieService.get('appName');
+              }
 
   ShowSideBar() {
     if (this.showSideBar === "true") {
@@ -25,5 +33,13 @@ export class HeaderComponent {
 
   login() {
     this.router.navigate(['/login-page']);
+  }
+
+  isLoggedIn() : boolean{
+    return this.authService.isLoggedIn();
+  }
+
+  LogOut(): any{
+    this.authService.LogOut();
   }
 }
