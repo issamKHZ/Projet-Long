@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
 
@@ -11,7 +12,7 @@ export class EksSimulatorComponent implements OnInit{
   sectionData !: any;
   section !: string;
 
-  constructor(private router : Router) {
+  constructor(private router : Router, private authService: AuthService) {
     console.log("enter to sim  eks constructor")
     this.sectionData = this.router.getCurrentNavigation()?.extras.state;
   }
@@ -24,5 +25,8 @@ export class EksSimulatorComponent implements OnInit{
     }
   }
 
+  isLoggedIn() : boolean {
+    return this.authService.isLoggedIn();
+  }
 
 }

@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { NavigationExtras, Router } from '@angular/router';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
@@ -14,9 +15,9 @@ export class SideBarComponent {
 
   currentRoute: any;
 
-  constructor(private router : Router, private route: Router) {
+  constructor(private router : Router, private authService: AuthService) {
     this.currentRoute = this.router.url;
-    this.platform = this.route.url;
+    this.platform = this.router.url;
   }
 
   cliquer(section: string) {
@@ -24,52 +25,56 @@ export class SideBarComponent {
     this.newItemEvent.emit(this.clique);
     this.currentRoute = this.router.url;
 
-    if (section == "calcul" || section == "result") {
-      if (this.platform == "/eks" || this.platform == "/eks-calculator") {
-        const navigationExtras: NavigationExtras = {
-          /*queryParams: {
-            coursContent: JSON.stringify(this.coursContent)
-          }*/
-          state : {
-            content: section
-          }
-        };
+    if (this.authService.isLoggedIn()) {
+      if (section == "calcul" || section == "result") {
+        if (this.platform == "/eks" || this.platform == "/eks-calculator") {
+          const navigationExtras: NavigationExtras = {
+            /*queryParams: {
+              coursContent: JSON.stringify(this.coursContent)
+            }*/
+            state : {
+              content: section
+            }
+          };
 
-        if (this.currentRoute != '/eks') {
+          if (this.currentRoute != '/eks') {
+            this.router.navigate(['/eks'] , navigationExtras);
+            this.clique = section;
+          } else {
+            this.router.navigate(['/eks-calculator'] , navigationExtras);
+          }
+        }
+        if (this.platform == "/aks" || this.platform == "/aks-calculator") {
+          const navigationExtras: NavigationExtras = {
+            /*queryParams: {
+              coursContent: JSON.stringify(this.coursContent)
+            }*/
+            state : {
+              content: section
+            }
+          };
+
+          if (this.currentRoute != '/aks') {
+            this.router.navigate(['/aks'] , navigationExtras);
+            this.clique = section;
+          } else {
+            this.router.navigate(['/aks-calculator'] , navigationExtras);
+          }
+        }
+        if (this.platform == "/") {
+          const navigationExtras: NavigationExtras = {
+            /*queryParams: {
+              coursContent: JSON.stringify(this.coursContent)
+            }*/
+            state : {
+              content: section
+            }
+          };
           this.router.navigate(['/eks'] , navigationExtras);
-          this.clique = section;
-        } else {
-          this.router.navigate(['/eks-calculator'] , navigationExtras);
         }
       }
-      if (this.platform == "/aks" || this.platform == "/aks-calculator") {
-        const navigationExtras: NavigationExtras = {
-          /*queryParams: {
-            coursContent: JSON.stringify(this.coursContent)
-          }*/
-          state : {
-            content: section
-          }
-        };
-
-        if (this.currentRoute != '/aks') {
-          this.router.navigate(['/aks'] , navigationExtras);
-          this.clique = section;
-        } else {
-          this.router.navigate(['/aks-calculator'] , navigationExtras);
-        }
-      }
-      if (this.platform == "/") {
-        const navigationExtras: NavigationExtras = {
-          /*queryParams: {
-            coursContent: JSON.stringify(this.coursContent)
-          }*/
-          state : {
-            content: section
-          }
-        };
-        this.router.navigate(['/eks'] , navigationExtras);
-      }
+    } else {
+      this.router.navigate(['/restreint']);
     }
   }
 

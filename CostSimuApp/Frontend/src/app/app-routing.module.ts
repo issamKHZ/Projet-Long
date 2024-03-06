@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { RestreintAccesComponent } from './restreint-acces/restreint-acces.component';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { EksSimulatorComponent } from './eks-simulator/eks-simulator.component';
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path:'eks-calculator', component:EksSimulatorComponent},
   {path:'aks-calculator', component:AksSimulatorComponent},
   {path:'register', component: RegisterComponent},
-  {path:'login', component:LoginComponent}
+  {path:'login', component:LoginComponent},
+  {path:'restreint', component: RestreintAccesComponent}
 ];
 
 @NgModule({

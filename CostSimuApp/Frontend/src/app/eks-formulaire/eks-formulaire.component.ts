@@ -1,7 +1,9 @@
+import { PreCalculService } from './../../pre-calcul.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, NavigationExtras } from '@angular/router';
 import { CalculService } from '../services/calcul.service';
+import { globalService } from '../services/globalService';
 
 @Component({
   selector: 'app-eks-formulaire',
@@ -13,39 +15,42 @@ export class EksFormulaireComponent implements OnInit{
   currentPath :any;
   calculatedSevices !: any[];
   services !: any[];
+  verification: boolean = false;
+  totalPrice : any;
+  expand: string = "Expand all";
+  prometheusAS : any[] = [{ field: "Average active time series", father: "Active Series", family: "Metric sample ingestionn", type: "text", value: "", placeholder: "Enter value..." },
+  { field: "Avg Collection Interval (in seconds)", father: "Active Series", family: "Metric sample ingestionn", type: "text", value: "", placeholder: "Enter value..." },];
+  prometheusIR : any[] = [{ field: "Ingestion Rate", father: "Ingestion Rate", family: "Metric sample ingestionn", type: "text", value: "", placeholder: "Enter value..." }];
 
   constructor(private router : Router,
-              private calculService: CalculService) {}
+              private calculService: CalculService,
+              private preCalculService: PreCalculService,
+              private globalService: globalService) {}
 
   ngOnInit(): void {
     this.currentPath = this.router.url;
     this.calculatedSevices = [];
-    this.services = [
-      {
-        name: "Eks Cluster Pricing",
-        desc: "Per month",
-        price : 0.00,
-        prop : [{field: "number of eks cluster", type: 'text', value: ""}],
-        bool: false
-      },
-      {
-        name: "EC2 specifications",
-        desc: "Per month",
-        price : 0.00,
-        prop : [{field: "Tenancy", type: 'dropdown', choices:["Shared", "Dedicated"], value: ""},
-                {field: "Operation System", type: 'dropdown', choices:["linux", "windows"], value: ""},
-                {field: "Workloads", type: "radio", choices: ["Constant usage", "Daily spike traffic", "Weekly spike traffic", "Monthly spike traffic"], value: ""},
-                {field: "Number of instances", type: "text", value: ""}],
-        bool: false
-      }
-    ];
+    this.expand = "Expand all";
+    this.services = this.globalService.services;
+
   }
 
   toggleSection(service : any) {
+    let i = 0;
     for (let s of this.services) {
       if (s == service) {
         s.bool = !s.bool;
       }
+    }
+    for (let s of this.services) {
+      if (!s.bool) {
+        i = i + 1;
+      }
+    }
+    if (i == this.services.length) {
+      this.expand = "Expand all";
+    } else {
+      this.expand = "Collapse all";
     }
   }
 
@@ -58,21 +63,13 @@ export class EksFormulaireComponent implements OnInit{
     return false;
   }
 
-  /*existIn(service: any, services: any) : boolean{
-    for (let s of services) {
-      if (s.name == service.name) {
-        return true;
-      }
-    }
-    return false;
-  }*/
-
   removeService(service: any) {
     const i = this.calculatedSevices.indexOf(service);
     if (i >= 0 && i < this.calculatedSevices.length) {
       // Remove the service at the specified index
       this.calculatedSevices.splice(i, 1);
     }
+    this.somme();
     this.changeBoolOfService(service, true);
   }
 
@@ -89,33 +86,72 @@ export class EksFormulaireComponent implements OnInit{
     serv.price = Number(price);
   }
 
+  somme() {
+    let somme = 0.0;
+    for (let  calcServ of this.calculatedSevices) {
+      somme = somme + calcServ.price;
+    }
+    this.totalPrice = somme;
+  }
+
+  toggle() {
+    if (this.expand == "Expand all") {
+      for (let s of this.services) {
+        s.bool = true;
+      }
+      this.expand = "Collapse all";
+    } else {
+      for (let s of this.services) {
+        s.bool = false;
+      }
+      this.expand = 'Expand all';
+    }
+  }
+
   onSubmit(form: NgForm, service: any) {
 
     var prop : any[] = [];
+    var myService : any = Object.assign({}, service);
+    if (form.valid) {
 
-    prop = service.prop.map((item: any) => {
-      return {
-        field: item.field,
-        value: item.value
-      };
-    });
+      if (service.name == "Amazon Managed Service for Prometheus") {
+        let firstDropdown = service.prop.filter((item : any) => item.field === "Select Metric")[0];
+        if (firstDropdown.value == "Active Series") {
+          myService.prop = service.prop.concat(this.prometheusAS);
+        } else {
+          myService.prop = service.prop.concat(this.prometheusIR);
+        }
+        prop = this.preCalculService.preCalculPrometheus(myService);
+      } else if (service.name == "Elastic Load Balancing") {
+        prop = this.preCalculService.preCalculLB(myService);
 
-    this.calculService.calculer(service.name, JSON.stringify(prop)).subscribe((response) => {
-      service.price = response;
-      if (!this.calculatedSevices.includes(service)) {
-        this.calculatedSevices.push(service);
+      } else if (service.name == "VPN Connection feature") {
+        prop = this.preCalculService.preCalculVPN(myService);
+        console.log("prop envoyé : ", prop);
       } else {
-        for (let s of this.calculatedSevices) {
-          if (s.name == service.name) {
-            s.price = response;
+        prop = this.preCalculService.PreCalculNormal(myService);
+      }
+
+      this.calculService.calculer(service.name, JSON.stringify(prop)).subscribe((response) => {
+        service.price = response;
+        if (!this.calculatedSevices.includes(service)) {
+          this.calculatedSevices.push(service);
+        } else {
+          for (let s of this.calculatedSevices) {
+            if (s.name == service.name) {
+              s.price = response;
+            }
           }
         }
+        this.somme();
       }
+
+      );
+      this.changeBoolOfService(service, false);
+
+
+
     }
-
-    );
-
-    this.changeBoolOfService(service, false);
   }
 
 }

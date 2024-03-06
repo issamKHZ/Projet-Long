@@ -1,9 +1,14 @@
-<app-header></app-header>
-<div class="d-flex" style="margin: 0; height: 90vh; background-color: #c7cac6;">
-  <app-side-bar [clique]="section"></app-side-bar>
-  <div class="container" style="height: 100%; overflow: auto;">
-    <app-aks-formulaire *ngIf="section === 'calcul'"></app-aks-formulaire>
-    <app-aks-result *ngIf="section === 'result'"></app-aks-result>
-  </div>
+<div *ngIf="isLoggedIn(); else restreint">
+  <app-header></app-header>
+  <div class="d-flex" style="margin: 0; height: 90vh; background-color: #c7cac6;">
+    <app-side-bar></app-side-bar>
+    <div class="container" style="height: 100%; overflow: auto;">
+      <app-aks-formulaire></app-aks-formulaire>
+      <app-aks-result></app-aks-result>
+    </div>
 
-</div>
+  </div>
+  </div>
+  <ng-template #restreint>
+  <app-restreint-acces></app-restreint-acces>
+  </ng-template>

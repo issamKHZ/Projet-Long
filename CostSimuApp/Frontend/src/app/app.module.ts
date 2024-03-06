@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HttpClientModule } from '@angular/common/http';
+import { RestreintAccesComponent } from './restreint-acces/restreint-acces.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { HttpClientModule } from '@angular/common/http';
     AksResultComponent,
     AksFormulaireComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    RestreintAccesComponent
   ],
   imports: [
     BrowserModule,

@@ -41,5 +41,6 @@ export class HeaderComponent {
 
   LogOut(): any{
     this.authService.LogOut();
+    this.router.navigate(['/']);
   }
 }

@@ -35,8 +35,8 @@ public class Services {
 			HashMap<String, HashMap<String, Double>> multipleProprieties) {
 		super();
 		this.name = name;
-		this.directProprieties = directProprieties;
-		this.multipleProprieties = multipleProprieties;
+		this.directProprieties = directProprieties; //text
+		this.multipleProprieties = multipleProprieties; //dropdown and radio
 	}
 
 	public String getId() {

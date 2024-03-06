@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -11,7 +12,7 @@ export class AksSimulatorComponent {
   sectionData !: any;
   section !: string;
 
-  constructor(private router : Router) {
+  constructor(private router : Router, private authService : AuthService) {
     this.sectionData = this.router.getCurrentNavigation()?.extras.state;
   }
 
@@ -20,5 +21,9 @@ export class AksSimulatorComponent {
       console.log(this.sectionData);
       this.section = this.sectionData.content;
     }
+  }
+
+  isLoggedIn() :boolean {
+    return this.authService.isLoggedIn();
   }
 }

@@ -1,3 +1,5 @@
+import { AuthService } from './../services/auth.service';
+import { Route, Router } from '@angular/router';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,6 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './aks-formulaire.component.scss'
 })
 export class AksFormulaireComponent {
-
 
 }

@@ -40,9 +40,7 @@ public class CalculController {
 		try {
 			propsNode = objectMapper.readTree(request.getParameter("props"));			
 			HashMap<String, Object> propsMap = this.JsonToMap(propsNode);
-			String appname = request.getParameter("appName");
-			System.out.println("controller propsMap : " + propsMap);
-			System.out.println("controller appname : " + appname);
+			String appname = request.getParameter("appName");			
 			price = calculeService.calculateServicePrice(appname, propsMap);
 		} catch (JsonProcessingException e) {			
 			e.printStackTrace();
@@ -69,7 +67,6 @@ public class CalculController {
             }
             
         }
-        System.out.println("props receivied are : " + propsMap);
         return propsMap;
 	}
 	

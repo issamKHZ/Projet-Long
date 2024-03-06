@@ -1,69 +1,117 @@
 <div class="container">
   <main>
     <div class="row g-5">
-      <div class="col-md-5 col-lg-4 order-md-last" style="padding-top: 20px;">
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
-          <span class="text-primary">Services</span>
-          <span class="badge bg-primary rounded-pill">{{calculatedSevices.length}}</span>
-        </h4>
-        <ul class="list-group mb-3">
-          <li class="list-group-item d-flex justify-content-between lh-sm" *ngFor="let service of calculatedSevices; let i=index">
-            <div>
-              <h6 class="my-0">{{service.name}}</h6>
-              <small class="text-body-secondary">{{service.desc}}</small>
-            </div>
-            <span class="text-body-secondary">{{ service.price | currency:'USD':'symbol':'2.2-2' }}</span>
-            <span (click)="removeService(service)" style="cursor: pointer; padding-left: 10px;">
-              <i class="bi bi-trash"></i>
-            </span>
-          </li>
+      <div class="col-md-5 col-lg-4 order-md-last" style="padding-top: 20px; position: relative;" *ngIf="calculatedSevices.length != 0">
+        <div class="mini-facture" style="position: sticky; top: 20px;">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-primary">Services</span>
+            <span class="badge bg-primary rounded-pill">{{calculatedSevices.length}}</span>
+          </h4>
+          <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between lh-sm" *ngFor="let service of calculatedSevices; let i=index">
+              <div>
+                <h6 class="my-0">{{service.name}}</h6>
+                <small class="text-body-secondary">{{service.desc}}</small>
+              </div>
+              <span class="text-body-secondary">{{ service.price | currency:'USD':'symbol':'2.2-2' }}</span>
+              <span (click)="removeService(service)" style="cursor: pointer;">
+                <i class="bi bi-trash"></i>
+              </span>
+            </li>
 
-          <li class="list-group-item d-flex justify-content-between">
-            <span>Total</span>
-            <strong>price</strong>
-          </li>
-        </ul>
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Total</span>
+              <strong>{{totalPrice | currency:'USD':'symbol':'2.2-2'}}</strong>
+            </li>
+            <!--<li class="list-group-item d-flex justify-content-between">-->
+              <button class="btn btn-primary mt-2">Go To Checkout</button>
+            <!--</li>-->
+          </ul>
+        </div>
       </div>
 
 
       <div class="col-md-7 col-lg-8" style="padding: 20px;">
-        <h4 class="mb-3">EKS Deployment Calculator</h4>
-
+        <div class="mb-3 calculator-title">
+          <!--<div style="position: sticky; top: 20px;">-->
+            <h4>EKS Deployment Calculator</h4>
+            <button class="btn btn-secondary" (click)="toggle()"> {{expand == "Expand all" ? 'Expand all' : 'Collapse all'}} </button>
+          <!--</div>-->
+        </div>
         <div class="section" *ngFor="let service of services">
           <div>
-            <h1 class="desc-title" (click)="toggleSection(service)" style="box-shadow: 0px 2px 12px 0px #000000; overflow: hidden;">
+            <h2 class="desc-title" (click)="toggleSection(service)" style="box-shadow: 0px 2px 12px 0px #000000;">
               <button class="round-button">
                 <i class="bi {{ShowModule(service.name) ? 'bi-caret-down-fill' : 'bi-caret-right-fill'}}"></i>
               </button>
               {{service.name}}
-            </h1>
+            </h2>
           </div>
-          <div class="service-info" *ngIf="ShowModule(service.name)" style="margin-bottom: 30px;">
+          <div class="service-info" *ngIf="ShowModule(service.name)" style="margin-bottom: 30px; max-height: 60vh; overflow: auto; border-bottom: 4px solid gray;">
             <form class="needs-validation" (submit)="onSubmit(depForm, service)" #depForm="ngForm" novalidate>
-              <div class="form-group" *ngFor="let prop of service.prop; let i = index" style="padding-top: 10px;">
-                <label for="{{prop.field}}" class="form-label" style="padding-left: 10px;"><strong>{{prop.field}}</strong></label>
-
-                <div *ngIf="prop.type === 'text'" class="input-group has-validation">
-                  <input type="text" class="form-control" id="{{prop.field}}" name="{{prop.field}}" [(ngModel)]="prop.value">
+              <div class="form-container" *ngFor="let family of service.families; let i = index">
+                <div class="container-title">
+                  <h4>{{family}}</h4>
                 </div>
 
-                <div *ngIf="prop.type === 'dropdown'" class="input-group has-validation">
-                  <select class="form-select" id="{{prop.field}}" name="{{prop.field}}" [(ngModel)]="prop.value">
-                    <option value="" disabled selected>Select</option>
-                    <option *ngFor="let choice of prop.choices" [value]="choice">{{choice}}</option>
-                  </select>
-                </div>
+                <div class="form-group" *ngFor="let prop of service.prop; let i = index" style="padding-top: 10px;">
+                  <div *ngIf="prop.family == family">
+                    <label for="{{prop.field}}" class="form-label" style="padding-left: 10px;"><strong>{{prop.field}}</strong></label>
 
-                <div *ngIf="prop.type === 'radio'" class="input-group has-validation" style="display: flex; flex-direction: column;">
-                  <div *ngFor="let choice of prop.choices" style="display: flex; gap: 5px;">
-                    <input type="radio" id="{{choice}}" name="{{prop.field}}" value="{{choice}}" [(ngModel)]="prop.value">
-                    <label for="{{choice}}">{{choice}}</label>
+                    <div *ngIf="prop.type === 'text'" class="input-group has-validation">
+                      <input type="text" class="form-control" id="{{prop.field}}" name="{{prop.field}}" placeholder="{{prop.placeholder}}" [(ngModel)]="prop.value" style="border: 1px solid black;" required [ngClass]="{'is-invalid': depForm.submitted && depForm.controls[prop.field].invalid}">
+                      <div class="invalid-feedback">
+                        Ce champ est requis.
+                      </div>
+                    </div>
+
+                    <div *ngIf="prop.type === 'dropdown'" class="input-group has-validation">
+                      <select class="form-select" id="{{prop.field}}" name="{{prop.field}}" [(ngModel)]="prop.value" style="border: 1px solid black;" required [ngClass]="{'is-invalid': depForm.submitted && depForm.controls[prop.field].invalid}">
+                        <option value="" disabled selected>Select</option>
+                        <option *ngFor="let choice of prop.choices" [value]="choice">{{choice}}</option>
+                      </select>
+                      <div class="invalid-feedback">
+                        Ce champ est requis.
+                      </div>
+                    </div>
+
+                    <div *ngIf="prop.value === 'Active Series'" class="input-group has-validation" style="display: flex; justify-content: space-between; margin-top: 20px;">
+                      <div *ngFor="let p of prometheusAS" class="form-group">
+                        <label for="{{p.field}}" class="form-label" style="padding-left: 10px;"><strong>{{p.field}}</strong></label>
+                        <input type="text" class="form-control" id="{{p.field}}" name="{{p.field}}" placeholder="{{p.placeholder}}" [(ngModel)]="p.value" style="border: 1px solid black;" required [ngClass]="{'is-invalid': depForm.submitted && depForm.controls[p.field].invalid}">
+                        <div class="invalid-feedback">
+                          Ce champ est requis.
+                        </div>
+                      </div>
+                    </div>
+
+                    <div *ngIf="prop.value === 'Ingestion Rate'" class="input-group has-validation" style="display: flex; justify-content: space-between; margin-top: 20px;">
+                      <div *ngFor="let p of prometheusIR" class="form-group">
+                        <label for="{{p.field}}" class="form-label" style="padding-left: 10px;"><strong>{{p.field}}</strong></label>
+                        <input type="text" class="form-control" id="{{p.field}}" name="{{p.field}}" placeholder="{{p.placeholder}}" [(ngModel)]="p.value" style="border: 1px solid black;" required [ngClass]="{'is-invalid': depForm.submitted && depForm.controls[p.field].invalid}">
+                        <div class="invalid-feedback">
+                          Ce champ est requis.
+                        </div>
+                      </div>
+                    </div>
+
+                    <div *ngIf="prop.type === 'radio'" class="input-group has-validation" style="display: flex; flex-direction: column;">
+                      <div *ngFor="let choice of prop.choices" style="display: flex; gap: 5px;">
+                        <input type="radio" id="{{choice}}" name="{{prop.field}}" value="{{choice}}" [(ngModel)]="prop.value" style="border: 1px solid black;" required [ngClass]="{'is-invalid': depForm.submitted && depForm.controls[prop.field].invalid}">
+                        <label for="{{choice}}">{{choice}}</label>
+                      </div>
+                      <div class="invalid-feedback">
+                        Sélectionnez une option.
+                      </div>
+                    </div>
                   </div>
                 </div>
-            </div>
+              </div>
               <hr class="my-4">
               <button class="w-100 btn btn-primary btn-lg" type="submit">Add To Calcul</button>
             </form>
+
+
           </div>
         </div>
 

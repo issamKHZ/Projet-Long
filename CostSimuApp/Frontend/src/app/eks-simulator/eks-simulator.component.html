@@ -1,3 +1,4 @@
+<div *ngIf="isLoggedIn(); else restreint">
 <app-header></app-header>
 <div class="d-flex" style="margin: 0; height: 90vh; background-color: #c7cac6;">
   <app-side-bar [clique]="section"></app-side-bar>
@@ -7,3 +8,8 @@
   </div>
 
 </div>
+</div>
+<ng-template #restreint>
+<app-restreint-acces></app-restreint-acces>
+</ng-template>
+
