@@ -36,7 +36,6 @@ export class SideBarComponent {
               content: section
             }
           };
-
           if (this.currentRoute != '/eks') {
             this.router.navigate(['/eks'] , navigationExtras);
             this.clique = section;
@@ -61,7 +60,7 @@ export class SideBarComponent {
             this.router.navigate(['/aks-calculator'] , navigationExtras);
           }
         }
-        if (this.platform == "/") {
+        if (this.platform == "/" || this.platform == "/comparaison") {
           const navigationExtras: NavigationExtras = {
             /*queryParams: {
               coursContent: JSON.stringify(this.coursContent)

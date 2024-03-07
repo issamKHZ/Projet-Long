@@ -1,34 +1,32 @@
-<div class="row mb-3" style="display: flex; justify-content: center;">
+<div class="row mb-3" style="display: flex; justify-content: center; padding-top: 20px;" *ngIf="servicesApaye.length != 0">
+  <h2>{{appName}}</h2>
   <div class="app-dep-info m-4">
-    <h2>App title</h2>
     <div class="table-info">
       <table class="table" style="border: transparent; background-color: transparent;">
         <tbody>
-          <tr>
-            <td style="background-color: #c7cac6;">Question : </td>
-            <td style="background-color: #c7cac6;">response</td>
+          <tr *ngFor="let item of servicesApaye">
+            <td style="background-color: #c7cac6;">{{item.name}}</td>
+            <td class="currency-value" style="background-color: #c7cac6;"><strong>{{item.value | number:'2.2-2' }}</strong></td>
           </tr>
           <tr>
-            <td style="background-color: #c7cac6;">Question : </td>
-            <td style="background-color: #c7cac6;">response</td>
-          </tr>
-          <tr>
-            <td style="background-color: #c7cac6;">Question : </td>
-            <td style="background-color: #c7cac6;">response</td>
-          </tr>
-          <tr>
-            <td style="background-color: #c7cac6;">Question : </td>
-            <td style="background-color: #c7cac6;">response</td>
-          </tr>
-          <tr>
-            <td style="background-color: #c7cac6;">Question : </td>
-            <td style="background-color: #c7cac6;">response</td>
+            <td style="background-color: #c7cac6;"><strong>Total price</strong></td>
+            <td class="currency-value" style="background-color: #c7cac6; color: #369;"><strong>{{totalPrice | number :'2.2-2' }}</strong></td>
           </tr>
         </tbody>
       </table>
+      <div class="mt-4 d-flex justify-content-center align-items-center" style="padding-bottom: 10px;">
+        <button class="btn btn-danger ms-2" (click)="delete()">
+          Delete
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
     </div>
   </div>
-  <div class="app-monitoring-info">
+  <div class="mt-4 d-flex justify-content-center align-items-center">
+    <button class="btn btn-warning ms-2" (click)="retourAks()">Estimate AKS Pricing</button>
+  </div>
+
+  <!--<div class="app-monitoring-info">
     <table class="table" style="border: transparent; background-color: transparent;">
       <tbody>
         <tr>
@@ -53,5 +51,21 @@
         </tr>
       </tbody>
     </table>
+  </div>-->
+
+</div>
+<div class="container mt-5" *ngIf="servicesApaye.length == 0">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card alert alert-danger" role="alert">
+        <div class="card-body text-center">
+          <h2 class="card-title">No Data Available</h2>
+          <p class="card-text">Oops, you need to add service(s) for calculating.</p>
+          <div class="mt-4">
+            <button class="btn btn-primary ms-2" (click)="goToCalcul()">Add service</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

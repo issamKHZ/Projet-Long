@@ -6,6 +6,7 @@ import { EksSimulatorComponent } from './eks-simulator/eks-simulator.component';
 import { AksSimulatorComponent } from './aks-simulator/aks-simulator.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { ComparaisonComponent } from './comparaison/comparaison.component';
 
 
 const routes: Routes = [
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path:'aks-calculator', component:AksSimulatorComponent},
   {path:'register', component: RegisterComponent},
   {path:'login', component:LoginComponent},
-  {path:'restreint', component: RestreintAccesComponent}
+  {path:'restreint', component: RestreintAccesComponent},
+  {path:'comparaison', component:ComparaisonComponent}
 ];
 
 @NgModule({

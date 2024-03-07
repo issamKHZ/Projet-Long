@@ -4,7 +4,7 @@
   <app-side-bar [clique]="section"></app-side-bar>
   <div class="container" style="height: 100%; overflow: auto;">
     <app-eks-formulaire *ngIf="section === 'calcul'"></app-eks-formulaire>
-    <app-eks-result *ngIf="section === 'result'"></app-eks-result>
+    <app-eks-result [receviedData]="data" *ngIf="section === 'result'"></app-eks-result>
   </div>
 
 </div>

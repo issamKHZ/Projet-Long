@@ -3,8 +3,24 @@
   width: 90%;
   border-radius: 10px;
   box-shadow: 0px 1px 10px -1px #000000;
-  padding-top: 10px;
+  padding: 10px;
+  padding-left: 30px;
 }
+
+.pricing-title {
+  color: #369;
+  text-decoration: underline;
+}
+
+.green{
+  color: green;
+}
+
+.red {
+  color: red;
+}
+
+
 
 .table-css {
   background: transparent;
@@ -15,7 +31,8 @@
   width: 90%;
   border-radius: 10px;
   box-shadow: 0px 1px 10px -1px #000000;
-  padding-top: 10px;
+  padding: 10px;
+  padding-left: 30px;
 }
 
 .currency-value strong::before {

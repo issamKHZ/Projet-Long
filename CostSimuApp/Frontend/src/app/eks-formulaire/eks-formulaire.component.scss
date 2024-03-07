@@ -60,3 +60,11 @@
   padding: 20px 5px 10px 5px;
   margin-top: 0;
 }
+
+.currency-value::before {
+  content: none; /* Supprime le symbole du dollar ajouté automatiquement par la directive currency */
+}
+
+.currency-value::after {
+  content: ' $'; /* Ajoute le symbole du dollar à la fin du contenu */
+}

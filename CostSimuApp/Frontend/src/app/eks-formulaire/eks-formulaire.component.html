@@ -13,7 +13,7 @@
                 <h6 class="my-0">{{service.name}}</h6>
                 <small class="text-body-secondary">{{service.desc}}</small>
               </div>
-              <span class="text-body-secondary">{{ service.price | currency:'USD':'symbol':'2.2-2' }}</span>
+              <span class="currency-value text-body-secondary">{{ service.price | number:'2.2-2' }}</span>
               <span (click)="removeService(service)" style="cursor: pointer;">
                 <i class="bi bi-trash"></i>
               </span>
@@ -21,10 +21,10 @@
 
             <li class="list-group-item d-flex justify-content-between">
               <span>Total</span>
-              <strong>{{totalPrice | currency:'USD':'symbol':'2.2-2'}}</strong>
+              <strong class="currency-value">{{totalPrice | number:'2.2-2'}}</strong>
             </li>
             <!--<li class="list-group-item d-flex justify-content-between">-->
-              <button class="btn btn-primary mt-2">Go To Checkout</button>
+              <button class="btn btn-primary mt-2" (click)="goToCheckout()">Go To Checkout</button>
             <!--</li>-->
           </ul>
         </div>
@@ -34,7 +34,7 @@
       <div class="col-md-7 col-lg-8" style="padding: 20px;">
         <div class="mb-3 calculator-title">
           <!--<div style="position: sticky; top: 20px;">-->
-            <h4>EKS Deployment Calculator</h4>
+            <h4>EKS Pricing Calculator</h4>
             <button class="btn btn-secondary" (click)="toggle()"> {{expand == "Expand all" ? 'Expand all' : 'Collapse all'}} </button>
           <!--</div>-->
         </div>
@@ -57,6 +57,13 @@
                 <div class="form-group" *ngFor="let prop of service.prop; let i = index" style="padding-top: 10px;">
                   <div *ngIf="prop.family == family">
                     <label for="{{prop.field}}" class="form-label" style="padding-left: 10px;"><strong>{{prop.field}}</strong></label>
+
+                    <div *ngIf="prop.type === 'number'" class="input-group has-validation">
+                      <input type="number" class="form-control" id="{{prop.field}}" name="{{prop.field}}" [(ngModel)]="prop.value" style="border: 1px solid black;" required [ngClass]="{'is-invalid': depForm.submitted && depForm.controls[prop.field].invalid}">
+                      <div class="invalid-feedback">
+                        Ce champ est requis.
+                      </div>
+                    </div>
 
                     <div *ngIf="prop.type === 'text'" class="input-group has-validation">
                       <input type="text" class="form-control" id="{{prop.field}}" name="{{prop.field}}" placeholder="{{prop.placeholder}}" [(ngModel)]="prop.value" style="border: 1px solid black;" required [ngClass]="{'is-invalid': depForm.submitted && depForm.controls[prop.field].invalid}">

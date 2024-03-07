@@ -1,6 +1,6 @@
 
-- faire une partie de precalculation pour envoyer les bon couple field prop pour les service (value/unit).
 - enregistrer les calculs de chaque app dans une base de donné mongodb.
+   --> faire pour aks;
 - ajouter les calcules en relation avec ec2.
-- ajouter les bon valeurs de calcul en backend.
-- ajoute dans prometheus le truc de changement de form selon le father.
+
+

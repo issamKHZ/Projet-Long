@@ -18,7 +18,6 @@ export class AksSimulatorComponent {
 
   ngOnInit(): void {
     if (this.sectionData){
-      console.log(this.sectionData);
       this.section = this.sectionData.content;
     }
   }

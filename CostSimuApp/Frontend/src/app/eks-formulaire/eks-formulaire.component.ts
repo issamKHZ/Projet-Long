@@ -1,4 +1,4 @@
-import { PreCalculService } from './../../pre-calcul.service';
+import { PreCalculService } from '../services/pre-calcul.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, NavigationExtras } from '@angular/router';
@@ -108,6 +108,10 @@ export class EksFormulaireComponent implements OnInit{
     }
   }
 
+  goToCheckout() {
+    this.globalService.transfert("eks", this.calculatedSevices, this.totalPrice);
+  }
+
   onSubmit(form: NgForm, service: any) {
 
     var prop : any[] = [];
@@ -148,7 +152,6 @@ export class EksFormulaireComponent implements OnInit{
 
       );
       this.changeBoolOfService(service, false);
-
 
 
     }

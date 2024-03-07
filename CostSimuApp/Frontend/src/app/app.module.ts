@@ -18,6 +18,8 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RestreintAccesComponent } from './restreint-acces/restreint-acces.component';
+import { ComparaisonComponent } from './comparaison/comparaison.component';
+import { CompAffichageComponent } from './comp-affichage/comp-affichage.component';
 
 
 @NgModule({
@@ -35,7 +37,9 @@ import { RestreintAccesComponent } from './restreint-acces/restreint-acces.compo
     AksFormulaireComponent,
     LoginComponent,
     RegisterComponent,
-    RestreintAccesComponent
+    RestreintAccesComponent,
+    ComparaisonComponent,
+    CompAffichageComponent
   ],
   imports: [
     BrowserModule,

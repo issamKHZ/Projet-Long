@@ -65,6 +65,7 @@ export class AuthService {
 
     LogOut() {
       this.cookieService.deleteAll();
+      localStorage.clear();
     }
 
 }

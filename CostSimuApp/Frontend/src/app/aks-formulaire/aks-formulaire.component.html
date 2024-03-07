@@ -1,1 +1,87 @@
-<p>aks formulaire work!</p>
+<div class="container">
+  <main>
+    <div class="row g-5">
+      <div class="col-md-5 col-lg-4 order-md-last" style="padding-top: 20px; position: relative;" *ngIf="calculatedSevices.length != 0">
+        <div class="mini-facture" style="position: sticky; top: 20px;">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-primary">Services</span>
+            <span class="badge bg-primary rounded-pill">{{calculatedSevices.length}}</span>
+          </h4>
+          <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between lh-sm" *ngFor="let service of calculatedSevices; let i=index">
+              <div>
+                <h6 class="my-0">{{service.name}}</h6>
+                <small class="text-body-secondary">{{service.desc}}</small>
+              </div>
+              <span class="currency-value text-body-secondary">{{ service.price | number:'2.2-2' }}</span>
+              <span (click)="removeService(service)" style="cursor: pointer;">
+                <i class="bi bi-trash"></i>
+              </span>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Total</span>
+              <strong class="currency-value">{{totalPrice | number:'2.2-2'}}</strong>
+            </li>
+            <!--<li class="list-group-item d-flex justify-content-between">-->
+              <button class="btn btn-primary mt-2" (click)="goToCheckout()">Go To Checkout</button>
+            <!--</li>-->
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-7 col-lg-8" style="padding: 20px;">
+        <div class="mb-3 calculator-title">
+          <!--<div style="position: sticky; top: 20px;">-->
+            <h4>AKS Pricing Calculator</h4>
+          <!--</div>-->
+        </div>
+        <div class="form-group" style="padding-top: 20px;">
+          <form (submit)="onSubmit()" class="needs-validation">
+            <div class="mb-4">
+              <label class="form-label" style="padding-left: 10px;"><strong>Nombre de clusters :</strong></label>
+              <div class="input-group has-validation">
+                <input type="number" [(ngModel)]="numClusters" name="numClusters" class="form-control" style="border: 1px solid black;" />
+              </div>
+            </div>
+            <div class="mb-4">
+              <label class="form-label" style="padding-left: 10px;"><strong>Type de système d'exploitation :</strong></label>
+              <select [(ngModel)]="osType" name="osType" class="form-select" style="border: 1px solid black;">
+                <option value="linux">Linux</option>
+                <option value="windows">Windows</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label class="form-label" style="padding-left: 10px;"><strong>Type d'instance :</strong></label>
+              <select [(ngModel)]="instanceType" name="instanceType" class="form-select" style="border: 1px solid black;">
+                <option *ngFor="let option of instanceOptions" [value]="option.value">{{ option.label }}</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label class="form-label" style="padding-left: 10px;"><strong>Nombre de VMs :</strong></label>
+              <input type="number" [(ngModel)]="numVMs" name="numVMs" class="form-control" style="border: 1px solid black;"/>
+            </div>
+            <div class="mb-4">
+              <label class="form-label" style="padding-left: 10px;"><strong>Nombre d'heures d'utilisation :</strong></label>
+              <input type="number" [(ngModel)]="numHours" name="numHours" class="form-control" style="border: 1px solid black;"/>
+            </div>
+            <div class="mb-4">
+              <label class="form-label" style="padding-left: 10px;"><strong>Disque OS géré :</strong></label>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                  <select [(ngModel)]="managedDiskTier" name="managedDiskTier" class="form-select" style="border: 1px solid black;">
+                    <option *ngFor="let tier of managedDiskTiers" [value]="tier">{{ tier }}</option>
+                  </select>
+                  <select [(ngModel)]="diskSize" name="diskSize" class="form-select" style="border: 1px solid black;">
+                    <option *ngFor="let size of diskSizes" [value]="size">{{ size }} GB</option>
+                  </select>
+                  <input type="number" [(ngModel)]="numDisks" name="numDisks" class="form-control" style="border: 1px solid black;"/>
+                </div>
+            </div>
+            <hr class="my-4">
+              <button class="w-100 btn btn-primary btn-lg" type="submit">Add To Calcul</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

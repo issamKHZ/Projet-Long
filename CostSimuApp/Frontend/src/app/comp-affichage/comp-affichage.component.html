@@ -1,0 +1,70 @@
+<div class="container mt-5" *ngIf="!aksFactureExist || !eksFactureExist">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card alert alert-danger" role="alert">
+        <div class="card-body text-center">
+          <h2 class="card-title">No Data Available</h2>
+          <p class="card-text">Oops, you need to add service(s) for calculating.</p>
+          <div class="mt-4">
+            <button class="btn btn-primary ms-2" (click)="goToCalcul('eks')" *ngIf="!eksFacture">Calcul eks pricing</button>
+            <button class="btn btn-primary ms-2" (click)="goToCalcul('aks')" *ngIf="!aksFacture">Calcul aks pricing</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" style="height: 100%; overflow: auto; padding-top: 50px;" *ngIf="eksFactureExist && aksFactureExist">
+  <h2 class="pricing-title">Pricing comparison summary : </h2>
+  <div class="row mb-3" style="display: flex; justify-content: center; align-items: center;">
+
+    <!-- Première colonne -->
+    <div class="col-md-8 themed-grid-col">
+
+      <!-- Première ligne -->
+      <div class="pb-3 EKS" style="padding: 20px;">
+
+        <div class="app-dep-info m-4">
+          <div class="table-info">
+            <h3 style="padding-bottom: 20px;">Eks Pricing summary</h3>
+            <table class="table" style="border: transparent; background-color: transparent;">
+              <tbody>
+                <tr *ngFor="let item of eksFacture.props">
+                  <td style="background-color: #c7cac6;">{{item.name}}</td>
+                  <td class="currency-value" style="background-color: #c7cac6;"><strong>{{item.value | number:'2.2-2' }}</strong></td>
+                </tr>
+                <tr>
+                  <td style="background-color: #c7cac6;"><strong>Total price</strong></td>
+                  <td class="currency-value" style="background-color: #c7cac6;" [ngClass]="eksFacture.price > aksFacture.price ? 'red' : 'green'"><strong>{{eksFacture.price | number :'2.2-2' }}</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Deuxième colonne -->
+    <div class="col-md-5 themed-grid-col">
+      <div class="app-dep-info m-4">
+        <div class="table-info">
+          <h3 style="padding-bottom: 20px;">Aks Pricing summary</h3>
+          <table class="table" style="border: transparent; background-color: transparent;">
+            <tbody>
+              <tr *ngFor="let item of aksFacture.props">
+                <td style="background-color: #c7cac6;">{{item.name}}</td>
+                <td class="currency-value" style="background-color: #c7cac6;"><strong>{{item.value | number:'2.2-2' }}</strong></td>
+              </tr>
+              <tr>
+                <td style="background-color: #c7cac6;"><strong>Total price</strong></td>
+                <td class="currency-value" style="background-color: #c7cac6;" [ngClass]="aksFacture.price > eksFacture.price ? 'red' : 'green'"><strong>{{aksFacture.price | number :'2.2-2' }}</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

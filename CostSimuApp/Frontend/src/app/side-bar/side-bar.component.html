@@ -17,10 +17,10 @@
     <li>
       <a [class]="'nav-link text-white ' + (clique === 'calcul' ? 'active' : '')" aria-current="page" (click)="cliquer('calcul')">
         <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-        {{currentRoute == '/' ? 'Estimate deployment': 'Calcul'}}
+        {{currentRoute == '/' || currentRoute == '/comparaison' ? 'Estimate deployment': 'Calcul'}}
       </a>
     </li>
-    <li *ngIf="currentRoute != '/'">
+    <li *ngIf="currentRoute != '/' && currentRoute != '/comparaison'">
       <a [class]="'nav-link text-white ' + (clique === 'result' ? 'active' : '')" (click)="cliquer('result')">
         <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
         Result

@@ -1,3 +1,4 @@
+import { CalculService } from './calcul.service';
 import { CookieService } from 'ngx-cookie-service';
 import { NavigationExtras, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
@@ -10,15 +11,16 @@ import { Observable } from 'rxjs';
 
 export class globalService {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private calculService: CalculService) {}
 
+  data !: {props: any[], price: any};
   services : any[] = [
     {
       name: "Eks Cluster Pricing",
       desc: "Per month",
       price: 0.00,
       prop: [
-        { field: "number of eks cluster", family: "EKS Cluster Pricing", type: 'text', value: "", placeholder: "Enter value..." }
+        { field: "number of eks cluster", family: "EKS Cluster Pricing", type: 'number', value: "", placeholder: "Enter value..." }
       ],
       families: ["EKS Cluster Pricing"],
       bool: false
@@ -121,6 +123,41 @@ export class globalService {
       bool: false
     }
   ];
+
+  transfert(service: string, calcul : any [], price : any) {
+    var data : {props: any[], price : any} = {props: [], price: 0};
+
+    data.props = calcul.map((item) => {return {
+      name: item.name,
+      value: item.price
+      };
+    });
+    data.price = price;
+    const navigationExtras: NavigationExtras = {
+      state : {
+        content: "result",
+        calcul: data
+      }
+    };
+    if (service == "eks") {
+      localStorage.setItem("eksFacture", JSON.stringify(data));
+      this.calculService.stockEKS(data);
+      if (this.router.url == "/eks") {
+        this.router.navigate(['/eks-calculator'] , navigationExtras);
+      } else {
+        this.router.navigate(['/eks'] , navigationExtras);
+      }
+    }
+    if (service == "aks") {
+      localStorage.setItem("aksFacture", JSON.stringify(data));
+      this.calculService.stockAKS(data);
+      if (this.router.url == "/aks") {
+        this.router.navigate(['/aks-calculator'] , navigationExtras);
+      } else {
+        this.router.navigate(['/aks'] , navigationExtras);
+      }
+    }
+  }
 
   redirectTo(path: string) {
     this.router.navigate(['/']);

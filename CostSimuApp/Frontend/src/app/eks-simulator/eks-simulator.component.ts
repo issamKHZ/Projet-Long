@@ -11,17 +11,16 @@ export class EksSimulatorComponent implements OnInit{
 
   sectionData !: any;
   section !: string;
+  data !: any;
 
   constructor(private router : Router, private authService: AuthService) {
-    console.log("enter to sim  eks constructor")
     this.sectionData = this.router.getCurrentNavigation()?.extras.state;
   }
 
   ngOnInit(): void {
     if (this.sectionData){
-      console.log(this.sectionData);
+      this.data = this.sectionData.calcul;
       this.section = this.sectionData.content;
-      console.log("eks section is : ", this.section);
     }
   }
 
