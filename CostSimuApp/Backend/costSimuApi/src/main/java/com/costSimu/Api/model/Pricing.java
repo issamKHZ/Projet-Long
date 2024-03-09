@@ -9,10 +9,25 @@ import java.util.*;
 public class Pricing {
 	
 	
+	public String getServiceName() {
+		return serviceName;
+	}
+	public void setServiceName(String serviceName) {
+		this.serviceName = serviceName;
+	}
+	public String getAppName() {
+		return appName;
+	}
+	public void setAppName(String appName) {
+		this.appName = appName;
+	}
+
+
 	@Id
 	private String id;
 	
-	private String name;
+	private String serviceName;
+	private String appName;
 	private double totalPrice;
 	private HashMap<String, Double> serviceApaye;
 
@@ -35,16 +50,11 @@ public class Pricing {
 		this.serviceApaye = serviceApaye;
 	}
 	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
 	
-	public Pricing(double totalPrice, HashMap<String, Double> serviceApaye, String name) {
+	public Pricing(double totalPrice, HashMap<String, Double> serviceApaye, String serviceName, String appName) {
 		super();
-		this.name = name;
+		this.appName = appName;
+		this.serviceName = serviceName;
 		this.totalPrice = totalPrice;
 		this.serviceApaye = serviceApaye;
 	}	

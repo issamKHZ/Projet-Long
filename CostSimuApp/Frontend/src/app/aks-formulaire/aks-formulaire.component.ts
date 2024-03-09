@@ -102,7 +102,7 @@ export class AksFormulaireComponent implements OnInit{
     };
     this.calculService.calculerAKS(data).subscribe((response) => {
       this.totalPrice = response;
-      this.calculatedSevices = [{name: "Azure kubernetes service (aks)", price: response}, ]
+      this.calculatedSevices = [{name: "Azure kubernetes service (aks)", price: response}]
       this.globalService.transfert("aks", this.calculatedSevices, this.totalPrice);
     })
   }

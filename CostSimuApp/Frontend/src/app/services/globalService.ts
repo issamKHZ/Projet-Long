@@ -30,12 +30,17 @@ export class globalService {
       desc: "Per month",
       price: 0.00,
       prop: [
-        { field: "Tenancy", family: "EC2 specifications", type: 'dropdown', choices: ["Shared", "Dedicated"], value: "" },
-        { field: "Operation System", family: "EC2 specifications", type: 'dropdown', choices: ["linux", "windows"], value: "" },
-        { field: "Workloads", family: "EC2 specifications", type: "radio", choices: ["Constant usage", "Daily spike traffic", "Weekly spike traffic", "Monthly spike traffic"], value: "" },
-        { field: "Number of instances", family: "EC2 specifications", type: "text", value: "", placeholder: "Enter value..." }
+        { field: "Operation System", family: "EC2 specifications", type: 'dropdown', choices: ["linux", "windows"], value: "linux" },
+        { field: "Workloads", family: "EC2 specifications", type: "radio", choices: ["Constant usage"], value: "Constant usage" },
+        { field: "Number of instances", family: "EC2 specifications", type: "text", value: "1", placeholder: "Enter value..." },
+        { field: "Instance family", family: "EC2 Instances", type: 'dropdown', choices: ["m7g", "m7j", "m7a", "mac", "m6g", "m6i", "m6in", "m6a", "m5", "m5zn", "m5a", "m4", "t4g", "t3", "t3a", "t2"], value: "t4g" },
+        { field: "vCPUs", family: "EC2 Instances", type: 'dropdown', choices: [1, 2, 4, 8, 12, 16, 24, 32, 36, 40, 48, 64, 72, 96, 128, 192, 224, 448], value: "2" },
+        { field: "Memory (GiB)", family: "EC2 Instances", type: 'dropdown', choices: ["0.5 GiB","1 GiB", "2 GiB", "3.75 GiB", "4 GiB", "5.25 GiB", "6 GiB", "7.5 GiB", "8 GiB", "10.5 GiB", "15.25 GiB", "15 GiB", "16 GiB"], value: "4 GiB" },
+        { field: "Network performance", family: "EC2 Instances", type: 'dropdown', choices: ["Up to 5 Gigabit","Low", "Low to Moderate", "Up to 12500 Megabit", "Up to 25000 Megabit", "Up to 30 Gigabit", "Up to 30000 Megabit", "Up to 40 Gigabit", "Up to 15 Gigabit", "Up to 40000 Megabit", "Up to 50 Gigabit"], value: "Up to 5 Gigabit" },
+        { field: "Usage (days)", family: "On-demand Pricing", type: 'text', value: "22" },
+        { field: "Usage type", family: "On-demand Pricing", type: 'dropdown', choices: ["hours / day", "hours / week", "hours / month"], value: "hours / day" },
       ],
-      families: ["EC2 specifications"],
+      families: ["EC2 specifications", "EC2 Instances", "On-demand Pricing"],
       bool: false
     },
     {

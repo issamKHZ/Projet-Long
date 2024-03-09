@@ -1,35 +1,37 @@
 <div class="container">
   <main>
     <div class="row g-5">
-      <div class="col-md-5 col-lg-4 order-md-last" style="padding-top: 20px; position: relative;" *ngIf="calculatedSevices.length != 0">
-        <div class="mini-facture" style="position: sticky; top: 20px;">
-          <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-primary">Services</span>
-            <span class="badge bg-primary rounded-pill">{{calculatedSevices.length}}</span>
-          </h4>
-          <ul class="list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between lh-sm" *ngFor="let service of calculatedSevices; let i=index">
-              <div>
-                <h6 class="my-0">{{service.name}}</h6>
-                <small class="text-body-secondary">{{service.desc}}</small>
-              </div>
-              <span class="currency-value text-body-secondary">{{ service.price | number:'2.2-2' }}</span>
-              <span (click)="removeService(service)" style="cursor: pointer;">
-                <i class="bi bi-trash"></i>
-              </span>
-            </li>
+      <div class="col-md-5 col-lg-4 order-md-last" style="padding-top: 20px; position: relative;">
+        <button class="btn btn-primary mt-2" style="margin-left: 35px;" (click)="recupererData()" *ngIf="calculatedSevices.length == 0">Recuperate last calculation</button>
+        <div *ngIf="calculatedSevices.length != 0">
+          <div class="mini-facture" style="position: sticky; top: 20px;">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+              <span class="text-primary">Services</span>
+              <span class="badge bg-primary rounded-pill">{{calculatedSevices.length}}</span>
+            </h4>
+            <ul class="list-group mb-3">
+              <li class="list-group-item d-flex justify-content-between lh-sm" *ngFor="let service of calculatedSevices; let i=index">
+                <div>
+                  <h6 class="my-0">{{service.name}}</h6>
+                  <small class="text-body-secondary">{{service.desc}}</small>
+                </div>
+                <span class="currency-value text-body-secondary">{{ service.price | number:'2.2-2' }}</span>
+                <span (click)="removeService(service)" style="cursor: pointer;">
+                  <i class="bi bi-trash"></i>
+                </span>
+              </li>
 
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Total</span>
-              <strong class="currency-value">{{totalPrice | number:'2.2-2'}}</strong>
-            </li>
-            <!--<li class="list-group-item d-flex justify-content-between">-->
-              <button class="btn btn-primary mt-2" (click)="goToCheckout()">Go To Checkout</button>
-            <!--</li>-->
-          </ul>
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Total</span>
+                <strong class="currency-value">{{totalPrice | number:'2.2-2'}}</strong>
+              </li>
+              <!--<li class="list-group-item d-flex justify-content-between">-->
+                <button class="btn btn-primary mt-2" (click)="goToCheckout()">Go To Checkout</button>
+              <!--</li>-->
+            </ul>
+          </div>
         </div>
       </div>
-
 
       <div class="col-md-7 col-lg-8" style="padding: 20px;">
         <div class="mb-3 calculator-title">

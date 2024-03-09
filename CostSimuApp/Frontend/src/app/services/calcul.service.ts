@@ -37,7 +37,8 @@ export class CalculService {
   stockEKS(datas: any) {
     let data = {
       serivcesApaye : JSON.stringify(datas.props),
-      totalPrice: datas.price
+      totalPrice: datas.price,
+      appName: this.cookieService.get("appName")
     }
     console.log("data stocke est e: ", data);
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.cookieService.get('token')}`);
@@ -49,20 +50,31 @@ export class CalculService {
   stockAKS(datas: any) {
     let data = {
       serivcesApaye : JSON.stringify(datas.props),
-      totalPrice: datas.price
+      totalPrice: datas.price,
+      appName: this.cookieService.get("appName")
     }
     console.log("data stocke est a: ", data);
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.cookieService.get('token')}`);
-    this.httpClient.post(this.API_URL + this.AKS_STOCK_ENDPOINT, {}, {params: data, headers})
+    this.httpClient.post(this.API_URL + this.AKS_STOCK_ENDPOINT, {}, {params: data, headers}).subscribe((response) => {
+      console.log(response);
+    });
   }
 
-  recuperEksStored() : any{
+  recuperEksStored() : Observable<any>{
+    let data = {
+      serviceName: "eks",
+      appName: this.cookieService.get("appName")
+    }
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.cookieService.get('token')}`);
-    this.httpClient.post(this.API_URL + this.EKS_STORED_ENDPOINT, {headers});
+    return this.httpClient.get(this.API_URL + this.EKS_STORED_ENDPOINT, {params:data, headers});
   }
 
-  recuperAksStored() : any{
+  recuperAksStored() : Observable<any>{
+    let data = {
+      serviceName: "aks",
+      appName: this.cookieService.get("appName")
+    }
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.cookieService.get('token')}`);
-    this.httpClient.post(this.API_URL + this.AKS_STORED_ENDPOINT, {headers});
+    return this.httpClient.get(this.API_URL + this.AKS_STORED_ENDPOINT, {params:data, headers});
   }
 }

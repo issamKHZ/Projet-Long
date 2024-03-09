@@ -8,12 +8,16 @@ import java.util.*;
 
 import com.costSimu.Api.model.Services;
 import com.costSimu.Api.repository.ServicesRepository;
+import com.costSimu.Api.service.InstanceService;
 
 @SpringBootApplication
 public class CostSimuApiApplication implements CommandLineRunner{
 
 	@Autowired
 	ServicesRepository serviceRepo;
+	
+	@Autowired
+	private InstanceService instanceService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CostSimuApiApplication.class, args);
@@ -109,6 +113,21 @@ public class CostSimuApiApplication implements CommandLineRunner{
 		
 		Services VPN = new Services("VPN Connection feature", Sprop5, Mprop5);
 		serviceRepo.save(VPN);
+		
+		// EC2
+		HashMap<String, Double> Sprop6 = new HashMap<String, Double>();
+		HashMap<String, HashMap<String, Double>> Mprop6 = new HashMap<String, HashMap<String, Double>>();
+		Sprop6.put("hours / day", 30.4167);
+		Sprop6.put("hours / week", 4.34524);
+		Sprop6.put("hours / month", 1.0);
+		
+		Services EC2 = new Services("Amazon EC2", Sprop6, Mprop6);
+		serviceRepo.save(EC2);
+		
+		
+		////
+		instanceService.fetchDataAndSave("US East (Ohio)");
+				
 	}
 	
 	public HashMap<String, Double> innerMap(String key, Double val) {

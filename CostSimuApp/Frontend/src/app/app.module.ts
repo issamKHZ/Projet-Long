@@ -20,6 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { RestreintAccesComponent } from './restreint-acces/restreint-acces.component';
 import { ComparaisonComponent } from './comparaison/comparaison.component';
 import { CompAffichageComponent } from './comp-affichage/comp-affichage.component';
+import { EksPerformanceComponent } from './eks-performance/eks-performance.component';
+import { AksPerformanceComponent } from './aks-performance/aks-performance.component';
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import { CompAffichageComponent } from './comp-affichage/comp-affichage.componen
     RegisterComponent,
     RestreintAccesComponent,
     ComparaisonComponent,
-    CompAffichageComponent
+    CompAffichageComponent,
+    EksPerformanceComponent,
+    AksPerformanceComponent
   ],
   imports: [
     BrowserModule,

@@ -2,15 +2,22 @@ package com.costSimu.Api.controller;
 
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.costSimu.Api.model.Pricing;
+import com.costSimu.Api.repository.PricingRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 
 
@@ -19,7 +26,12 @@ import jakarta.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/aks/estim")
 class AksController {
-
+	
+	ObjectMapper objectMapper = new ObjectMapper();
+	
+	@Autowired
+	PricingRepository pricingRepo;
+	
     // Prix des clusters et des instances
     private final double clusterPrice = 73; // Prix du cluster
     private final Map<String, Map<Integer, Double>> diskPrices = new HashMap<>();
@@ -90,10 +102,65 @@ class AksController {
         return map;
     }
     
+    public HashMap<String, Object> JsonToMap(JsonNode propsNode) {
+		HashMap<String, Object> propsMap = new HashMap<>();
+		String field;
+
+        // Parcourir chaque élément de la liste
+        for (JsonNode propNode : propsNode) {
+        	if (propNode.get("field") != null) {
+        		field = propNode.get("field").asText();
+        	} else {
+        		field = propNode.get("name").asText();
+        	}
+            String valueNode = propNode.get("value").asText();
+
+            
+            // Convertir la valeur en fonction de son type
+            try {
+            	int nombre = Integer.parseInt(valueNode);
+            	propsMap.put(field, nombre);
+            } catch (NumberFormatException e) {
+            	propsMap.put(field, valueNode);
+            }
+            
+        }
+        return propsMap;
+	}
+    
     @PostMapping(path="/stocker")
 	public @ResponseBody ResponseEntity<Double> stockerAksPricing (HttpServletRequest request) {
+    	System.out.println("controller stockerAks in");
+    	JsonNode propsNode;
+		try {
+			propsNode = objectMapper.readTree(request.getParameter("serivcesApaye"));
+			HashMap<String, Object> propsMap = this.JsonToMap(propsNode);
+			double totalPrice = Double.parseDouble(request.getParameter("totalPrice"));
+			String appName = request.getParameter("appName");
+			HashMap<String, Double> doublePropsMap = new HashMap<>();
+
+			for (Map.Entry<String, Object> entry : propsMap.entrySet()) {					
+		        doublePropsMap.put(entry.getKey(), Double.parseDouble(entry.getValue().toString()));			
+			}
+			
+			Pricing aksPricing = new Pricing(totalPrice, doublePropsMap, "aks", appName);			
+			pricingRepo.deleteByAppNameAndServiceName(appName, "aks");
+			pricingRepo.save(aksPricing);
+			return new ResponseEntity("ok", HttpStatus.OK);
+		} catch (JsonProcessingException e) {		
+			e.printStackTrace();
+		}			
 		
+		return new ResponseEntity("error", HttpStatus.BAD_REQUEST);
+	}
+    
+    @GetMapping(path="/stored")
+	public @ResponseBody ResponseEntity<String> recuperateEksPricing (HttpServletRequest request) {
+		String appName = request.getParameter("appName");
+		String serviceName = request.getParameter("serviceName");
 		
-		return new ResponseEntity("ok", HttpStatus.OK);
+		Pricing pricing = pricingRepo.findItemByAppNameAndServiceName(appName, serviceName);
+		
+		return new ResponseEntity(pricing, HttpStatus.OK);
 	}
 }

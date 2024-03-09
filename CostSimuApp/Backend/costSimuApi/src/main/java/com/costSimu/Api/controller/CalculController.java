@@ -88,24 +88,32 @@ public class CalculController {
 			propsNode = objectMapper.readTree(request.getParameter("serivcesApaye"));
 			HashMap<String, Object> propsMap = this.JsonToMap(propsNode);
 			double totalPrice = Double.parseDouble(request.getParameter("totalPrice"));
+			String appName = request.getParameter("appName");
 			HashMap<String, Double> doublePropsMap = new HashMap<>();
 
 			for (Map.Entry<String, Object> entry : propsMap.entrySet()) {					
 		        doublePropsMap.put(entry.getKey(), Double.parseDouble(entry.getValue().toString()));			
 			}
 			
-			Pricing eksPricing = new Pricing(totalPrice, doublePropsMap, "eks");			
-			pricingRepo.deletePricingByName("eks");
+			Pricing eksPricing = new Pricing(totalPrice, doublePropsMap, "eks", appName);			
+			pricingRepo.deleteByAppNameAndServiceName(appName, "eks");
 			pricingRepo.save(eksPricing);
 			return new ResponseEntity("ok", HttpStatus.OK);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
+		} catch (JsonProcessingException e) {		
 			e.printStackTrace();
 		}			
 		
 		return new ResponseEntity("error", HttpStatus.BAD_REQUEST);
 	}
 	
-	
+	@GetMapping(path="/stored")
+	public @ResponseBody ResponseEntity<String> recuperateEksPricing (HttpServletRequest request) {
+		String appName = request.getParameter("appName");
+		String serviceName = request.getParameter("serviceName");
+		
+		Pricing pricing = pricingRepo.findItemByAppNameAndServiceName(appName, serviceName);
+		
+		return new ResponseEntity(pricing, HttpStatus.OK);
+	}
 	
 }

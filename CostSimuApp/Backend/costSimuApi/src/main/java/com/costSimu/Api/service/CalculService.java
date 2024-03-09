@@ -2,7 +2,9 @@ package com.costSimu.Api.service;
 
 import org.springframework.stereotype.Service;
 
+import com.costSimu.Api.model.Instance;
 import com.costSimu.Api.model.Services;
+import com.costSimu.Api.repository.InstanceRepository;
 import com.costSimu.Api.repository.ServicesRepository;
 
 import java.util.*;
@@ -15,17 +17,22 @@ public class CalculService {
 	@Autowired 
 	private ServicesRepository serviceRepo;
 	
+	@Autowired 
+	private InstanceRepository instanceRepo;
+	
 	public Double calculateServicePrice(String serviceName, HashMap<String, Object> props) {
 		
 		if (serviceName.equals("Amazon CloudWatch")) {
 			return this.calculCloudWatch();			
 		} else if (serviceName.equals("Amazon Managed Service for Prometheus")) {
 			return this.calculPrometheus(serviceName, props);
-		} else if (serviceName.equals("VPN Connection feature")) { //todo
+		} else if (serviceName.equals("VPN Connection feature")) {
 			System.out.println(serviceName);
 			return this.calculVPN(serviceName, props);			
 		} else if (serviceName.equals("Elastic Load Balancing")) { 
 			return this.calculLB(serviceName, props);
+		} else if (serviceName.equals("Amazon EC2")) {
+			return this.calculEC2(serviceName, props);
 		} else {
 			Services service = serviceRepo.findItemByName(serviceName);				
 			HashMap<String, Double> directProp = service.getDirectProprieties();		
@@ -54,6 +61,33 @@ public class CalculService {
 	
 	public Double calculCloudWatch() {
 		return 0.0;
+	}
+	
+	public Double calculEC2(String serviceName, HashMap<String, Object> props) {
+		Services service = serviceRepo.findItemByName(serviceName);
+		
+		
+		HashMap<String, Double> directProp = service.getDirectProprieties();
+		
+		List<Double> results = new ArrayList<>();
+		int nbInstance = (Integer) props.get("Number of instances");
+		double usage = ((Integer) props.get("Usage (days)")).doubleValue();
+		double usageType = directProp.get(props.get("Usage type"));
+		String memory = ((String) props.get("Memory (GiB)"));
+		String family = ((String) props.get("Instance family"));
+		String vCPUs = ((Integer) props.get("vCPUs")).toString();
+		String performance = ((String) props.get("Network performance"));
+		
+		List<Instance> matchingInstances = instanceRepo.findInstancesByAttributes(memory, vCPUs, performance);
+		for (Instance i : matchingInstances) {
+			if (! i.getInstanceType().startsWith(family)) {
+				matchingInstances.remove(i);
+			}
+		}						
+		double price = matchingInstances.get(0).getPrice();		
+		double result = nbInstance * usage * usageType * price;
+		
+		return result;
 	}
 	
 	public Double calculPrometheus(String serviceName, HashMap<String, Object> props) {

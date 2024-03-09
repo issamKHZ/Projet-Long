@@ -25,13 +25,28 @@ export class EksFormulaireComponent implements OnInit{
   constructor(private router : Router,
               private calculService: CalculService,
               private preCalculService: PreCalculService,
-              private globalService: globalService) {}
+              private globalService: globalService) {
+              }
 
   ngOnInit(): void {
     this.currentPath = this.router.url;
     this.calculatedSevices = [];
     this.expand = "Expand all";
     this.services = this.globalService.services;
+
+  }
+
+  recupererData() {
+    this.calculService.recuperEksStored().subscribe((response: any) => {
+      var services = response.serviceApaye;
+      var total = response.totalPrice;
+      var keys = Object.keys(services);
+
+      this.totalPrice = total;
+      for (let k of keys) {
+        this.calculatedSevices.push({name: k, desk: "per month", price: services[k]});
+      }
+    });
 
   }
 
