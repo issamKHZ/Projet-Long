@@ -31,15 +31,21 @@ public class InstanceService {
         // Utilisez RestTemplate pour extraire les données depuis linUrl
         String linUrl = "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/ec2/USD/current/ec2-ondemand-without-sec-sel/"
                 + regionName + "/Linux/index.json?timestamp=1639230933739";
+        
+        String winUrl = "https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/ec2/USD/current/ec2-ondemand-without-sec-sel/" 
+        		+ regionName + "/Windows/index.json?timestamp=1639230933739";
 
         String linData = restTemplate.getForObject(linUrl, String.class);
+        String winData = restTemplate.getForObject(winUrl, String.class);
 
         // Parsez les données JSON en objets
-        List<Instance> instances = parseJsonToInstances(linData, regionName);
+        List<Instance> instancesLin = parseJsonToInstances(linData, regionName);
+        List<Instance> instancesWin = parseJsonToInstances(winData, regionName);
 
         // Enregistrez les instances dans la base de données
         instanceRepository.deleteAll();
-        instanceRepository.saveAll(instances);
+        instanceRepository.saveAll(instancesLin);
+        instanceRepository.saveAll(instancesWin);
     }
 
     private List<Instance> parseJsonToInstances(String jsonData, String regionName) {

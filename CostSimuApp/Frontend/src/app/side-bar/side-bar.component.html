@@ -21,6 +21,12 @@
       </a>
     </li>
     <li *ngIf="currentRoute != '/' && currentRoute != '/comparaison'">
+      <a [class]="'nav-link text-white ' + (clique === 'performance' ? 'active' : '')" (click)="cliquer('performance')">
+        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+        Performance
+      </a>
+    </li>
+    <li *ngIf="currentRoute != '/' && currentRoute != '/comparaison'">
       <a [class]="'nav-link text-white ' + (clique === 'result' ? 'active' : '')" (click)="cliquer('result')">
         <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
         Result

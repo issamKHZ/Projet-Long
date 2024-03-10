@@ -6,6 +6,11 @@
   padding-top: 10px;
 }
 
+.pricing-title {
+  color: #369;
+  text-decoration: underline;
+}
+
 .table-css {
   background: transparent;
 }
@@ -25,3 +30,22 @@
 .currency-value strong::after {
   content: ' $'; /* Ajoute le symbole du dollar à la fin du contenu */
 }
+
+.tableStyle {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableStyle, .thStyle, .tdStyle {
+  border: 1px solid black;
+}
+
+.thStyle, .tdStyle {
+  padding: 8px;
+  text-align: left;
+}
+
+thead {
+  background-color: #f2f2f2;
+}
+

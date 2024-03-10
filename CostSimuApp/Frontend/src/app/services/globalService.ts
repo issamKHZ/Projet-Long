@@ -30,7 +30,7 @@ export class globalService {
       desc: "Per month",
       price: 0.00,
       prop: [
-        { field: "Operation System", family: "EC2 specifications", type: 'dropdown', choices: ["linux", "windows"], value: "linux" },
+        { field: "Operation System", family: "EC2 specifications", type: 'dropdown', choices: ["Linux", "Windows"], value: "linux" },
         { field: "Workloads", family: "EC2 specifications", type: "radio", choices: ["Constant usage"], value: "Constant usage" },
         { field: "Number of instances", family: "EC2 specifications", type: "text", value: "1", placeholder: "Enter value..." },
         { field: "Instance family", family: "EC2 Instances", type: 'dropdown', choices: ["m7g", "m7j", "m7a", "mac", "m6g", "m6i", "m6in", "m6a", "m5", "m5zn", "m5a", "m4", "t4g", "t3", "t3a", "t2"], value: "t4g" },

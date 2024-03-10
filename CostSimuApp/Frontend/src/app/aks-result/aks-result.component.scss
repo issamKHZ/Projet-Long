@@ -6,6 +6,12 @@
   padding-top: 10px;
 }
 
+.pricing-title {
+  color: #369;
+  text-decoration: underline;
+}
+
+
 .table-css {
   background: transparent;
 }
@@ -17,3 +23,22 @@
   box-shadow: 0px 1px 10px -1px #000000;
   padding-top: 10px;
 }
+
+.tableStyle {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableStyle, .thStyle, .tdStyle {
+  border: 1px solid black;
+}
+
+.thStyle, .tdStyle {
+  padding: 8px;
+  text-align: left;
+}
+
+thead {
+  background-color: #f2f2f2;
+}
+

@@ -11,6 +11,7 @@ export class AksSimulatorComponent {
 
   sectionData !: any;
   section !: string;
+  load !: any;
 
   constructor(private router : Router, private authService : AuthService) {
     this.sectionData = this.router.getCurrentNavigation()?.extras.state;

@@ -11,6 +11,7 @@ export class EksSimulatorComponent implements OnInit{
 
   sectionData !: any;
   section !: string;
+  load !: any;
   data !: any;
 
   constructor(private router : Router, private authService: AuthService) {
@@ -21,6 +22,7 @@ export class EksSimulatorComponent implements OnInit{
     if (this.sectionData){
       this.data = this.sectionData.calcul;
       this.section = this.sectionData.content;
+      this.load = this.sectionData.load;
     }
   }
 

@@ -78,7 +78,9 @@ public class CalculService {
 		String vCPUs = ((Integer) props.get("vCPUs")).toString();
 		String performance = ((String) props.get("Network performance"));
 		
-		List<Instance> matchingInstances = instanceRepo.findInstancesByAttributes(memory, vCPUs, performance);
+		String OpSystem = ((String) props.get("Operation System"));
+		
+		List<Instance> matchingInstances = instanceRepo.findInstancesByAttributes(memory, vCPUs, performance, OpSystem);
 		for (Instance i : matchingInstances) {
 			if (! i.getInstanceType().startsWith(family)) {
 				matchingInstances.remove(i);

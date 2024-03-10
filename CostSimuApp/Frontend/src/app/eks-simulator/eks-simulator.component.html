@@ -5,6 +5,7 @@
   <div class="container" style="height: 100%; overflow: auto;">
     <app-eks-formulaire *ngIf="section === 'calcul'"></app-eks-formulaire>
     <app-eks-result [receviedData]="data" *ngIf="section === 'result'"></app-eks-result>
+    <app-eks-performance *ngIf="section === 'performance'"></app-eks-performance>
   </div>
 
 </div>

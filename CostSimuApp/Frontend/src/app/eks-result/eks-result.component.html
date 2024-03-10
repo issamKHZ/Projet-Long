@@ -1,6 +1,7 @@
 <div class="row mb-3" style="display: flex; justify-content: center; padding-top: 20px;" *ngIf="servicesApaye.length != 0">
   <h2>{{appName}}</h2>
   <div class="app-dep-info m-4">
+    <h2 class="pricing-title">Eks pricing summary : </h2>
     <div class="table-info">
       <table class="table" style="border: transparent; background-color: transparent;">
         <tbody>
@@ -26,35 +27,8 @@
     <button class="btn btn-warning ms-2" (click)="retourAks()">Estimate AKS Pricing</button>
   </div>
 
-  <!--<div class="app-monitoring-info">
-    <table class="table" style="border: transparent; background-color: transparent;">
-      <tbody>
-        <tr>
-          <td style="background-color: #c7cac6;">Question : </td>
-          <td style="background-color: #c7cac6;">response</td>
-        </tr>
-        <tr>
-          <td style="background-color: #c7cac6;">Question : </td>
-          <td style="background-color: #c7cac6;">response</td>
-        </tr>
-        <tr>
-          <td style="background-color: #c7cac6;">Question : </td>
-          <td style="background-color: #c7cac6;">response</td>
-        </tr>
-        <tr>
-          <td style="background-color: #c7cac6;">Question : </td>
-          <td style="background-color: #c7cac6;">response</td>
-        </tr>
-        <tr>
-          <td style="background-color: #c7cac6;">Question : </td>
-          <td style="background-color: #c7cac6;">response</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>-->
-
 </div>
-<div class="container mt-5" *ngIf="servicesApaye.length == 0">
+<div class="container mt-5" *ngIf="servicesApaye.length == 0 && performanceMetrics.theads.length == 0">
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="card alert alert-danger" role="alert">
@@ -69,3 +43,32 @@
     </div>
   </div>
 </div>
+
+<ng-container *ngIf="performanceMetrics.theads.length != 0">
+  <h2 class="pricing-title">Eks performance summary : </h2>
+  <table style="margin-top: 40px; margin-bottom: 100px;" class="tableStyle">
+    <thead>
+      <tr>
+        <th class="thStyle">Performance Metrics</th>
+        <th class="thStyle">Metric</th>
+        <th *ngFor="let t of performanceMetrics.theads" class="thStyle">{{t}}
+          <i class="bi bi-trash" (click)="deleteThead(t)"></i>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let l of performanceMetrics.lignes">
+        <tr class="trStyle">
+            <td class="tdStyle" *ngIf="isObject(l)" [attr.rowspan]="l.n">
+              {{ l.fam }}
+            </td>
+            <td class="tdStyle">{{l.metrics}}</td>
+            <td *ngIf="includes('low')" class="tdStyle">{{l.low}}</td>
+            <td *ngIf="includes('medium')" class="tdStyle">{{l.medium}}</td>
+            <td *ngIf="includes('high')" class="tdStyle">{{l.high}}</td>
+            <td *ngIf="includes('very')" class="tdStyle">{{l.very}}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</ng-container>

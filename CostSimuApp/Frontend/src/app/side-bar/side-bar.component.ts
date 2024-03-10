@@ -26,7 +26,7 @@ export class SideBarComponent {
     this.currentRoute = this.router.url;
 
     if (this.authService.isLoggedIn()) {
-      if (section == "calcul" || section == "result") {
+      if (section == "calcul" || section == "result" || section == "performance") {
         if (this.platform == "/eks" || this.platform == "/eks-calculator") {
           const navigationExtras: NavigationExtras = {
             /*queryParams: {
