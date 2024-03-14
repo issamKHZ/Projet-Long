@@ -1,6 +1,0 @@
-
-- enregistrer les calculs de chaque app dans une base de donné mongodb.
-   --> faire pour aks;
-- ajouter les calcules en relation avec ec2.
-
-
