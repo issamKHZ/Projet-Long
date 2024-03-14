@@ -22,6 +22,8 @@ import { ComparaisonComponent } from './comparaison/comparaison.component';
 import { CompAffichageComponent } from './comp-affichage/comp-affichage.component';
 import { EksPerformanceComponent } from './eks-performance/eks-performance.component';
 import { AksPerformanceComponent } from './aks-performance/aks-performance.component';
+import { HistoComponent } from './histo/histo.component';
+
 
 
 @NgModule({
@@ -43,7 +45,8 @@ import { AksPerformanceComponent } from './aks-performance/aks-performance.compo
     ComparaisonComponent,
     CompAffichageComponent,
     EksPerformanceComponent,
-    AksPerformanceComponent
+    AksPerformanceComponent,
+    HistoComponent
   ],
   imports: [
     BrowserModule,

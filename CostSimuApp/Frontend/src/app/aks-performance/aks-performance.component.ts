@@ -18,14 +18,14 @@ export class AksPerformanceComponent {
     {
       name: "Low Load (<~ 500)",
       props: [
-        {field: "Uptime", type: "text", value:"1", family: "Availability and Reliability", placeholder:""},
-        {field: "Error Rate", type: "text", value:"1", family: "Availability and Reliability", placeholder:""},
-        {field: "Throughput", type: "text", value:"1", family: "Scalability", placeholder:""},
-        {field: "Response Time", type: "text", value:"1", family: "Latency and Response Time", placeholder:""},
-        {field: "Latency", type: "text", value:"1", family: "Latency and Response Time", placeholder:""},
-        {field: "CPU Utilization", type: "text", value:"1", family: "Resource Utilization Efficiency", placeholder:""},
-        {field: "memory usage", type: "text", value:"1", family: "Resource Utilization Efficiency", placeholder:""},
-        {field: "Storage Throughput", type: "text", value:"1", family: "Resource Utilization Efficiency", placeholder:""}
+        {field: "Uptime", type: "text", value:"", family: "Availability and Reliability", placeholder:"Unit is (%)"},
+        {field: "Error Rate", type: "text", value:"", family: "Availability and Reliability", placeholder:"Unit is (%)"},
+        {field: "Throughput", type: "text", value:"", family: "Scalability", placeholder:"Unit is (requeste/second)"},
+        {field: "Response Time", type: "text", value:"", family: "Latency and Response Time", placeholder:"Unit is (second)"},
+        {field: "Latency", type: "text", value:"", family: "Latency and Response Time", placeholder:"Unit is (second)"},
+        {field: "CPU Utilization", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:"Unit is (%)"},
+        {field: "memory usage", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:"Unit is (%)"},
+        {field: "Storage Throughput", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:"Unit is (kB/second)"}
       ],
       families: ["Availability and Reliability", "Scalability", "Latency and Response Time", "Resource Utilization Efficiency"],
       bool: false
@@ -33,14 +33,14 @@ export class AksPerformanceComponent {
     {
       name: "Medium Load (<~ 1000)",
       props: [
-        {field: "Uptime", type: "text", value:"", family: "Availability and Reliability", placeholder:""},
-        {field: "Error Rate", type: "text", value:"", family: "Availability and Reliability", placeholder:""},
-        {field: "Throughput", type: "text", value:"", family: "Scalability", placeholder:""},
-        {field: "Response Time", type: "text", value:"", family: "Latency and Response Time", placeholder:""},
-        {field: "Latency", type: "text", value:"", family: "Latency and Response Time", placeholder:""},
-        {field: "CPU Utilization", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:""},
-        {field: "memory usage", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:""},
-        {field: "Storage Throughput", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:""}
+        {field: "Uptime", type: "text", value:"", family: "Availability and Reliability", placeholder:"Unit is (%)"},
+        {field: "Error Rate", type: "text", value:"", family: "Availability and Reliability", placeholder:"Unit is (%)"},
+        {field: "Throughput", type: "text", value:"", family: "Scalability", placeholder:"Unit is (requeste/second)"},
+        {field: "Response Time", type: "text", value:"", family: "Latency and Response Time", placeholder:"Unit is (second)"},
+        {field: "Latency", type: "text", value:"", family: "Latency and Response Time", placeholder:"Unit is (second)"},
+        {field: "CPU Utilization", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:"Unit is (%)"},
+        {field: "memory usage", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:"Unit is (%)"},
+        {field: "Storage Throughput", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:"Unit is (kB/second)"}
       ],
       families: ["Availability and Reliability", "Scalability", "Latency and Response Time", "Resource Utilization Efficiency"],
       bool: false
@@ -48,14 +48,14 @@ export class AksPerformanceComponent {
     {
       name: "High Load (<~ 1500)",
       props: [
-        {field: "Uptime", type: "text", value:"", family: "Availability and Reliability", placeholder:""},
-        {field: "Error Rate", type: "text", value:"", family: "Availability and Reliability", placeholder:""},
-        {field: "Throughput", type: "text", value:"", family: "Scalability", placeholder:""},
-        {field: "Response Time", type: "text", value:"", family: "Latency and Response Time", placeholder:""},
-        {field: "Latency", type: "text", value:"", family: "Latency and Response Time", placeholder:""},
-        {field: "CPU Utilization", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:""},
-        {field: "memory usage", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:""},
-        {field: "Storage Throughput", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:""}
+        {field: "Uptime", type: "text", value:"", family: "Availability and Reliability", placeholder:"Unit is (%)"},
+        {field: "Error Rate", type: "text", value:"", family: "Availability and Reliability", placeholder:"Unit is (%)"},
+        {field: "Throughput", type: "text", value:"", family: "Scalability", placeholder:"Unit is (requeste/second)"},
+        {field: "Response Time", type: "text", value:"", family: "Latency and Response Time", placeholder:"Unit is (second)"},
+        {field: "Latency", type: "text", value:"", family: "Latency and Response Time", placeholder:"Unit is (second)"},
+        {field: "CPU Utilization", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:"Unit is (%)"},
+        {field: "memory usage", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:"Unit is (%)"},
+        {field: "Storage Throughput", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:"Unit is (kB/second)"}
       ],
       families: ["Availability and Reliability", "Scalability", "Latency and Response Time", "Resource Utilization Efficiency"],
       bool: false
@@ -63,14 +63,14 @@ export class AksPerformanceComponent {
     {
       name: "Very High Load (<~ 2000)",
       props: [
-        {field: "Uptime", type: "text", value:"", family: "Availability and Reliability", placeholder:""},
-        {field: "Error Rate", type: "text", value:"", family: "Availability and Reliability", placeholder:""},
-        {field: "Throughput", type: "text", value:"", family: "Scalability", placeholder:""},
-        {field: "Response Time", type: "text", value:"", family: "Latency and Response Time", placeholder:""},
-        {field: "Latency", type: "text", value:"", family: "Latency and Response Time", placeholder:""},
-        {field: "CPU Utilization", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:""},
-        {field: "memory usage", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:""},
-        {field: "Storage Throughput", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:""}
+        {field: "Uptime", type: "text", value:"", family: "Availability and Reliability", placeholder:"Unit is (%)"},
+        {field: "Error Rate", type: "text", value:"", family: "Availability and Reliability", placeholder:"Unit is (%)"},
+        {field: "Throughput", type: "text", value:"", family: "Scalability", placeholder:"Unit is (requeste/second)"},
+        {field: "Response Time", type: "text", value:"", family: "Latency and Response Time", placeholder:"Unit is (second)"},
+        {field: "Latency", type: "text", value:"", family: "Latency and Response Time", placeholder:"Unit is (second)"},
+        {field: "CPU Utilization", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:"Unit is (%)"},
+        {field: "memory usage", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:"Unit is (%)"},
+        {field: "Storage Throughput", type: "text", value:"", family: "Resource Utilization Efficiency", placeholder:"Unit is (kB/second)"}
       ],
       families: ["Availability and Reliability", "Scalability", "Latency and Response Time", "Resource Utilization Efficiency"],
       bool: false
